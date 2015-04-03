@@ -12,11 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.R;
@@ -37,6 +39,13 @@ public class NewMemoryFragLayout extends BaseFragment {
 	private View view;
     private ArrayList<EditText> friendsEditText = new ArrayList<>();
     private LayoutInflater inflater;
+    private ImageView image1ImageView;
+    private ImageView image2ImageView;
+    private ImageView image3ImageView;
+    private RelativeLayout newPhotoView1;
+    private RelativeLayout newPhotoView2;
+    private RelativeLayout newPhotoView3;
+    private List<String> imagesPaths = new ArrayList<>();
 
 	@Override
 	public void onAttach(Activity activity)
@@ -119,6 +128,22 @@ public class NewMemoryFragLayout extends BaseFragment {
         memoryToEditText = (EditText) memoryItem.findViewById(R.id.new_memory_fragment_name_edit_text);
         addNewButton = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_add_new_button);
         addNewButton.setVisibility(View.GONE);
+
+        memoryItem = (ViewGroup) view.findViewById(R.id.new_memory_fragment_add_photos_container);
+        memoryItemName = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_name_text_view);
+        memoryItemName.setText("What did you see:");
+        final ViewGroup finalMemoryItem2 = memoryItem;
+        final LinearLayout photosContainer = (LinearLayout) memoryItem.findViewById(R.id.new_memory_fragment_photos_container);
+        EditText memoryEditText = (EditText) memoryItem.findViewById(R.id.new_memory_fragment_name_edit_text);
+        memoryEditText.setVisibility(View.GONE);
+        addNewButton = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_add_new_button);
+        addNewButton.setVisibility(View.GONE);
+//        addNewButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//            }
+//        });
+        initPhotos(finalMemoryItem2, photosContainer);
     }
 
     private void initFriends(final ViewGroup finalMemoryItem, final LinearLayout friendsContainer)
@@ -157,5 +182,49 @@ public class NewMemoryFragLayout extends BaseFragment {
 
         friendsContainer.addView(newFriendView);
 
+    }
+
+    private void initPhotos(final ViewGroup finalMemoryItem, final LinearLayout photosContainer)
+    {
+        newPhotoView1 = (RelativeLayout) inflater.inflate(R.layout.add_new_photos_layout, finalMemoryItem, false);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) newPhotoView1.getLayoutParams();
+        layoutParams.width = 0;
+        layoutParams.weight = 1;
+        newPhotoView1.setLayoutParams(layoutParams);
+        image1ImageView = (ImageView) newPhotoView1.findViewById(R.id.add_new_photos_image_view);
+        newPhotoView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        photosContainer.addView(newPhotoView1);
+
+        newPhotoView2 = (RelativeLayout) inflater.inflate(R.layout.add_new_photos_layout, finalMemoryItem, false);
+        layoutParams = (LinearLayout.LayoutParams) newPhotoView2.getLayoutParams();
+        layoutParams.width = 0;
+        layoutParams.weight = 1;
+        newPhotoView2.setLayoutParams(layoutParams);
+        image2ImageView = (ImageView) newPhotoView2.findViewById(R.id.add_new_photos_image_view);
+        newPhotoView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        newPhotoView2.setVisibility(View.INVISIBLE);
+        photosContainer.addView(newPhotoView2);
+
+        newPhotoView3 = (RelativeLayout) inflater.inflate(R.layout.add_new_photos_layout, finalMemoryItem, false);
+        layoutParams = (LinearLayout.LayoutParams) newPhotoView3.getLayoutParams();
+        layoutParams.width = 0;
+        layoutParams.weight = 1;
+        newPhotoView3.setLayoutParams(layoutParams);
+        image3ImageView = (ImageView) newPhotoView3.findViewById(R.id.add_new_photos_image_view);
+        newPhotoView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        newPhotoView3.setVisibility(View.INVISIBLE);
+        photosContainer.addView(newPhotoView3);
     }
 }
