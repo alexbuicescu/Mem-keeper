@@ -17,6 +17,7 @@ public class Memory {
     private List<String> longitude;
     private List<String> latitude;
     private List<String> friends;
+    private String date;
     private String locationOne;
     private String locationTwo;
 
@@ -106,5 +107,13 @@ public class Memory {
 
     public void setFriends(List<String> friends) {
         this.friends = friends;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

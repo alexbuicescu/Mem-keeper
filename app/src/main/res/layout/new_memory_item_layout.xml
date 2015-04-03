@@ -35,6 +35,22 @@
         android:paddingRight="@dimen/large_horizontal_padding"
         android:textSize="@dimen/text_size_normal"/>
 
+    <TextView
+        android:id="@+id/new_memory_fragment_date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/normal_vertical_padding"
+        android:paddingLeft="15dp"
+        android:paddingRight="@dimen/large_horizontal_padding"
+        android:layout_marginLeft="@dimen/small_horizontal_padding"
+        android:layout_marginRight="@dimen/small_horizontal_padding"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/black"
+        android:background="@drawable/sel_spinner_bg"
+        android:text="Select date"
+        android:clickable="true"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/new_memory_fragment_add_new_friends_container"
         android:layout_width="wrap_content"

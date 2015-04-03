@@ -1,6 +1,7 @@
 package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -19,7 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import example.com.memkeeper.Activities.AddPhotosActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
@@ -45,6 +49,7 @@ public class NewMemoryFragLayout extends BaseFragment {
     private ImageView image1ImageView;
     private ImageView image2ImageView;
     private ImageView image3ImageView;
+    private TextView memoryDatePicker;
     private RelativeLayout newPhotoView1;
     private RelativeLayout newPhotoView2;
     private RelativeLayout newPhotoView3;
@@ -92,6 +97,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         TextView addNewButton;
         EditText memoryFriendNameEditText;
         EditText memoryNameEditText;
+        EditText memoryDateEditText;
         EditText memoryFromEditText;
         EditText memoryToEditText;
 
@@ -129,6 +135,30 @@ public class NewMemoryFragLayout extends BaseFragment {
         memoryItemName = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_name_text_view);
         memoryItemName.setText("Where did you travel to:");
         memoryToEditText = (EditText) memoryItem.findViewById(R.id.new_memory_fragment_name_edit_text);
+        addNewButton = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_add_new_button);
+        addNewButton.setVisibility(View.GONE);
+
+        memoryItem = (ViewGroup) view.findViewById(R.id.new_memory_fragment_date_container);
+        memoryItemName = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_name_text_view);
+        memoryItemName.setText("When did you travel:");
+        memoryDateEditText = (EditText) memoryItem.findViewById(R.id.new_memory_fragment_name_edit_text);
+        memoryDateEditText.setVisibility(View.GONE);
+        memoryDatePicker = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_date_picker);
+        memoryDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+                DatePickerDialog datePicker = new DatePickerDialog(context,
+                        R.style.AppTheme, datePickerListener,
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.DAY_OF_MONTH));
+                datePicker.setCancelable(false);
+                datePicker.setTitle("Select the date");
+                datePicker.show();
+            }
+        });
+        memoryDatePicker.setVisibility(View.VISIBLE);
         addNewButton = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_add_new_button);
         addNewButton.setVisibility(View.GONE);
 
@@ -284,4 +314,16 @@ public class NewMemoryFragLayout extends BaseFragment {
 //            image3ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
 //        }
     }
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            String year1 = String.valueOf(selectedYear);
+            String month1 = String.valueOf(selectedMonth + 1);
+            String day1 = String.valueOf(selectedDay);
+
+            memoryDatePicker.setText(day1 + "/" + month1 + "/" + year1);
+        }
+    };
 }
