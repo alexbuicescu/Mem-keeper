@@ -12,6 +12,7 @@ public class Album {
     private String path;
     private Bitmap thumbnail;
     private List<Photo> photosList;
+    private int nrSelectedPhotos;
 
     public String getName() {
         return name;
@@ -43,5 +44,13 @@ public class Album {
 
     public void setPhotosList(List<Photo> photosList) {
         this.photosList = photosList;
+    }
+
+    public int getNrSelectedPhotos() {
+        return nrSelectedPhotos;
+    }
+
+    public void setNrSelectedPhotos(int nrSelectedPhotos) {
+        this.nrSelectedPhotos = nrSelectedPhotos;
     }
 }

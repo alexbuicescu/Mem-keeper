@@ -11,19 +11,28 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import example.com.memkeeper.Layouts.AlbumsFragLayout;
+import example.com.memkeeper.Layouts.PhotosFragLayout;
 import example.com.memkeeper.R;
+import example.com.memkeeper.Utils.PhotoUtils;
 
 
-public class AddPhotosActivity extends ActionBarActivity implements AlbumsFragLayout.OnAlbumsFragmentListener {
+public class AddPhotosActivity extends ActionBarActivity implements
+        AlbumsFragLayout.OnAlbumsFragmentListener,
+        PhotosFragLayout.OnPhotosFragmentListener {
 
-    AlbumsFragLayout layout;
+    AlbumsFragLayout layoutAlbums;
+    PhotosFragLayout layoutPhotos;
+    boolean isInAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.holder_frag_albums);
+        setContentView(R.layout.holder_frag_gallery);
 
-        layout = (AlbumsFragLayout) getSupportFragmentManager().findFragmentById(R.id.albums_fragment);
+        isInAlbum = false;
+        layoutAlbums = new AlbumsFragLayout(); //(AlbumsFragLayout) getSupportFragmentManager().findFragmentById(R.id.albums_fragment);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, layoutAlbums).commit();
         onContentChanged();
     }
 
@@ -32,6 +41,23 @@ public class AddPhotosActivity extends ActionBarActivity implements AlbumsFragLa
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if(!isInAlbum)
+        {
+            super.onBackPressed();
+        }
+        else
+        {
+            getSupportFragmentManager().popBackStack();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_container, layoutAlbums)
+//                    .commitAllowingStateLoss();
+            isInAlbum = false;
+        }
     }
 
     @Override
@@ -52,5 +78,17 @@ public class AddPhotosActivity extends ActionBarActivity implements AlbumsFragLa
     @Override
     public void onAlbumClicked(int position) {
 
+        PhotoUtils.setCurrentAlbum(position);
+
+        layoutPhotos = new PhotosFragLayout();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, layoutPhotos)
+                .addToBackStack("some name")
+                .commit();
+        isInAlbum = true;
+    }
+
+    @Override
+    public void onPhotoClicked(int position) {
     }
 }

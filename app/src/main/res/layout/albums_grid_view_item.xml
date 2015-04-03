@@ -10,6 +10,19 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher"/>
 
+    <TextView
+        android:id="@+id/albums_grid_view_selected_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/small_horizontal_padding"
+        android:layout_marginTop="@dimen/small_horizontal_padding"
+        android:padding="@dimen/normal_horizontal_padding"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:text="10"/>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

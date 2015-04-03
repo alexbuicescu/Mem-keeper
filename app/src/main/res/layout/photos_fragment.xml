@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <GridView
+        android:id="@+id/activity_photos_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:horizontalSpacing="@dimen/gallery_photo_horizontal_padding"
+        android:verticalSpacing="@dimen/gallery_photo_vertical_padding"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="2"
+        android:paddingBottom="@dimen/gallery_photo_vertical_padding"
+        android:paddingLeft="@dimen/gallery_photo_horizontal_padding"
+        android:paddingTop="@dimen/gallery_photo_vertical_padding"
+        android:paddingRight="@dimen/gallery_photo_horizontal_padding"
+        android:scrollbarStyle="outsideOverlay"
+        android:stretchMode="columnWidth" />
+
+</RelativeLayout>

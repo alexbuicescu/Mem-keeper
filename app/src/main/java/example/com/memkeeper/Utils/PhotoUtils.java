@@ -17,7 +17,7 @@ import example.com.memkeeper.POJO.Photo;
  */
 public class PhotoUtils {
     private static List<Album> albums;
-    private static List<Photo> photos;
+    private static int currentAlbum;
 
     public static List<Album> getAlbums() {
         if(albums == null)
@@ -30,18 +30,6 @@ public class PhotoUtils {
 
     public static void setAlbums(List<Album> albums) {
         PhotoUtils.albums = albums;
-    }
-
-    public static List<Photo> getPhotos() {
-        if(photos == null)
-        {
-            photos = new ArrayList<>();
-        }
-        return photos;
-    }
-
-    public static void setPhotos(List<Photo> photos) {
-        PhotoUtils.photos = photos;
     }
 
     private static int calculateInSampleSize(
@@ -133,4 +121,16 @@ public class PhotoUtils {
         return foundPhoto;
     }
 
+    public static Album getCurrentAlbum() {
+        return albums.get(currentAlbum);
+    }
+
+    public static void setCurrentAlbum(int currentAlbum) {
+        for(int i = 0; i < albums.get(currentAlbum).getPhotosList().size(); i++)
+        {
+            String path = albums.get(currentAlbum).getPhotosList().get(i).getPath();
+            albums.get(currentAlbum).getPhotosList().get(i).setThumbnail(decodeSampledBitmapFromUri(path, 200, 200));
+        }
+        PhotoUtils.currentAlbum = currentAlbum;
+    }
 }

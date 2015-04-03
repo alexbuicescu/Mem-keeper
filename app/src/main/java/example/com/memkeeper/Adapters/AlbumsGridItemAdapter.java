@@ -71,6 +71,7 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
             holder.thumbnailImageView = (ImageView) convertView.findViewById(R.id.albums_grid_view_thumbnail_image_view);
             holder.countTextView = (TextView) convertView.findViewById(R.id.albums_grid_view_counter_text_view);
             holder.albumName = (TextView) convertView.findViewById(R.id.albums_grid_view_name_text_view);
+            holder.selectedTextView = (TextView) convertView.findViewById(R.id.albums_grid_view_name_text_view);
 
             convertView.setTag(holder);
         } else {
@@ -80,6 +81,7 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
         holder.thumbnailImageView.setImageBitmap(albums.get(position).getThumbnail());
         holder.countTextView.setText(albums.get(position).getPhotosList().size() + "");
         holder.albumName.setText(albums.get(position).getName());
+        holder.selectedTextView.setText(albums.get(position).getNrSelectedPhotos() + "");
 
         return convertView;
     }
@@ -93,5 +95,6 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
         ImageView thumbnailImageView;
         TextView countTextView;
         TextView albumName;
+        TextView selectedTextView;
     }
 }
