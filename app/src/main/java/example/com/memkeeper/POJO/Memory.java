@@ -10,6 +10,7 @@ import java.util.List;
 public class Memory {
     private String name;
     private Bitmap coverImage;
+    private String coverImagePath;
     private int id;
     private List<Bitmap> images;
 
@@ -43,5 +44,13 @@ public class Memory {
 
     public void setImages(List<Bitmap> images) {
         this.images = images;
+    }
+
+    public String getCoverImagePath() {
+        return coverImagePath;
+    }
+
+    public void setCoverImagePath(String coverImagePath) {
+        this.coverImagePath = coverImagePath;
     }
 }

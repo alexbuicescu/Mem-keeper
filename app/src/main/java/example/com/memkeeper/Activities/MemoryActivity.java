@@ -9,15 +9,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import example.com.memkeeper.Layouts.MemoryPhotosFragLayout;
 import example.com.memkeeper.R;
 
 
-public class MemoryActivity extends ActionBarActivity {
+public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFragLayout.OnMemoryPhotoFragmentListener {
+
+    MemoryPhotosFragLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_memory);
+        setContentView(R.layout.holder_frag_memory);
+
+        layout = (MemoryPhotosFragLayout) getSupportFragmentManager().findFragmentById(R.id.memory_fragment);
+        onContentChanged();
     }
 
     @Override
@@ -40,5 +46,10 @@ public class MemoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPhotoClicked(int position) {
+
     }
 }
