@@ -1,6 +1,7 @@
 package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import example.com.memkeeper.Activities.AddPhotosActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.MemoriesUtils;
@@ -195,6 +197,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         newPhotoView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                openGallery();
             }
         });
         photosContainer.addView(newPhotoView1);
@@ -208,6 +211,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         newPhotoView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                openGallery();
             }
         });
         newPhotoView2.setVisibility(View.INVISIBLE);
@@ -222,9 +226,16 @@ public class NewMemoryFragLayout extends BaseFragment {
         newPhotoView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                openGallery();
             }
         });
         newPhotoView3.setVisibility(View.INVISIBLE);
         photosContainer.addView(newPhotoView3);
+    }
+
+    private void openGallery()
+    {
+        Intent myIntent = new Intent(getActivity(), AddPhotosActivity.class);
+        context.startActivity(myIntent);
     }
 }
