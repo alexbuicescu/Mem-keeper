@@ -1,6 +1,7 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,17 +72,26 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
             holder.thumbnailImageView = (ImageView) convertView.findViewById(R.id.albums_grid_view_thumbnail_image_view);
             holder.countTextView = (TextView) convertView.findViewById(R.id.albums_grid_view_counter_text_view);
             holder.albumName = (TextView) convertView.findViewById(R.id.albums_grid_view_name_text_view);
-            holder.selectedTextView = (TextView) convertView.findViewById(R.id.albums_grid_view_name_text_view);
+            holder.selectedTextView = (TextView) convertView.findViewById(R.id.albums_grid_view_selected_text_view);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.thumbnailImageView.setImageBitmap(albums.get(position).getThumbnail());
+//        holder.thumbnailImageView.setImageURI(albums.get(position).getPhotosList().get(0).getUri());
+        holder.thumbnailImageView.setImageBitmap(albums.get(position).getPhotosList().get(0).getThumbnail());
         holder.countTextView.setText(albums.get(position).getPhotosList().size() + "");
         holder.albumName.setText(albums.get(position).getName());
-        holder.selectedTextView.setText(albums.get(position).getNrSelectedPhotos() + "");
+        if(albums.get(position).getNrSelectedPhotos() > 0)
+        {
+            holder.selectedTextView.setVisibility(View.VISIBLE);
+            holder.selectedTextView.setText(albums.get(position).getNrSelectedPhotos() + "");
+        }
+        else
+        {
+            holder.selectedTextView.setVisibility(View.GONE);
+        }
 
         return convertView;
     }

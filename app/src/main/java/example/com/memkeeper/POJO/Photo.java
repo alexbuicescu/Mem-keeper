@@ -1,6 +1,7 @@
 package example.com.memkeeper.POJO;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 /**
  * Created by Alexandru on 03-Apr-15.
@@ -8,6 +9,7 @@ import android.graphics.Bitmap;
 public class Photo {
     private String name;
     private String path;
+    private Uri uri;
     private Bitmap bitmap;
     private Bitmap thumbnail;
     private boolean isSelected;
@@ -50,5 +52,13 @@ public class Photo {
 
     public void setThumbnail(Bitmap thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
     }
 }

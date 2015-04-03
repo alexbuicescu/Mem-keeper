@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import example.com.memkeeper.R;
+import example.com.memkeeper.Utils.PhotoUtils;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -44,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
                 activity.startActivity(myIntent);
             }
         });
+
+        PhotoUtils.queryPhotos(this);
     }
 
     @Override

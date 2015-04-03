@@ -10,7 +10,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import example.com.memkeeper.Adapters.AlbumsGridItemAdapter;
 import example.com.memkeeper.Adapters.PhotosGridItemAdapter;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.PhotoUtils;
@@ -64,8 +63,8 @@ public class PhotosFragLayout extends BaseFragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    boolean isSelected = PhotoUtils.getCurrentAlbum().getPhotosList().get(position).isSelected();
-                    PhotoUtils.getCurrentAlbum().getPhotosList().get(position).setSelected(!isSelected);
+                    boolean isSelected = PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).isSelected();
+                    PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).setSelected(!isSelected);
                     photosGridItemAdapter.notifyDataSetChanged();
 
                     listener.onPhotoClicked(position);
@@ -85,11 +84,11 @@ public class PhotosFragLayout extends BaseFragment {
         if (photosGridItemAdapter == null)
         {
             photosGridItemAdapter = new PhotosGridItemAdapter(context,
-                    PhotoUtils.getCurrentAlbum().getPhotosList());
+                    PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList());
             photosGridView.setAdapter(photosGridItemAdapter);
         } else
         {
-            photosGridItemAdapter.setPhotos(PhotoUtils.getCurrentAlbum().getPhotosList());
+            photosGridItemAdapter.setPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList());
         }
     }
 }

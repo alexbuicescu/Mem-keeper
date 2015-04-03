@@ -1,8 +1,12 @@
 package example.com.memkeeper.Utils;
 
+import android.app.Activity;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
@@ -24,7 +28,8 @@ public class PhotoUtils {
         {
             albums = new ArrayList<>();
         }
-        loadAlbums();
+
+//        loadAlbums();
         return albums;
     }
 
@@ -32,105 +37,111 @@ public class PhotoUtils {
         PhotoUtils.albums = albums;
     }
 
-    private static int calculateInSampleSize(
-
-        BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-            if (width > height) {
-                inSampleSize = Math.round((float)height / (float)reqHeight);
-            } else {
-                inSampleSize = Math.round((float)width / (float)reqWidth);
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    public static Bitmap decodeSampledBitmapFromUri(String path, int reqWidth, int reqHeight) {
-
-        Bitmap bm = null;
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(path, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        bm = BitmapFactory.decodeFile(path, options);
-
-        return bm;
-    }
-
-    public static void loadAlbums() {
-        albums.clear();
-        String ExternalStorageDirectoryPath = Environment
-                .getExternalStorageDirectory()
-                .getAbsolutePath();
-
-        String targetPath = ExternalStorageDirectoryPath + "/";
-
-        File targetDirector = new File(targetPath);
-
-        findFilesInDir(targetDirector);
-    }
-
-    private static boolean findFilesInDir(File targetDirector)
-    {
-        boolean foundPhoto = false;
-        List<Photo> photos = new ArrayList<>();
-
-        File[] files = targetDirector.listFiles();
-        for (File file : files){
-            if(file.isFile()) {
-                if (file.getAbsolutePath().endsWith(".jpg") || file.getAbsolutePath().endsWith(".png")) {
-                    Log.i("photos", file.getAbsolutePath());
-                    foundPhoto = true;
-
-                    Photo photo = new Photo();
-                    photo.setName(file.getName());
-                    photo.setPath(file.getAbsolutePath());
-
-                    photos.add(photo);
-                }
-            }
-            else
-            {
-                if(!file.getName().startsWith("."))
-                {
-                    findFilesInDir(new File(file.getAbsolutePath() + "/"));
-                }
-            }
-        }
-        if(!photos.isEmpty())
-        {
-            Album album = new Album();
-            album.setName(targetDirector.getName());
-            album.setPath(targetDirector.getAbsolutePath());
-            album.setPhotosList(photos);
-            album.setThumbnail(decodeSampledBitmapFromUri(photos.get(0).getPath(), 200, 200));
-            albums.add(album);
-        }
-        return foundPhoto;
-    }
-
-    public static Album getCurrentAlbum() {
-        return albums.get(currentAlbum);
+    public static int getCurrentAlbum() {
+        return currentAlbum;
     }
 
     public static void setCurrentAlbum(int currentAlbum) {
-        for(int i = 0; i < albums.get(currentAlbum).getPhotosList().size(); i++)
-        {
-            String path = albums.get(currentAlbum).getPhotosList().get(i).getPath();
-            albums.get(currentAlbum).getPhotosList().get(i).setThumbnail(decodeSampledBitmapFromUri(path, 200, 200));
-        }
         PhotoUtils.currentAlbum = currentAlbum;
+    }
+
+    public static void queryPhotos(Activity activity)
+    {
+        // which image properties are we querying
+        String[] projection = new String[]{
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.PICASA_ID,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DATE_TAKEN
+        };
+
+        // Get the base URI for the People table in the Contacts content provider.
+        Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
+        // Make the query.
+        Cursor cur = activity.getContentResolver().query(images,
+                projection, // Which columns to return
+                null,       // Which rows to return (all rows)
+                null,       // Selection arguments (none)
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME + " ASC"        // Ordering
+        );
+
+        Log.i("ListingImages"," query count="+cur.getCount());
+        String lastBucketName = "";
+        albums = new ArrayList<>();
+        List<Photo> photos = new ArrayList<>();
+
+        if (cur.moveToFirst()) {
+            String bucket;
+            String name;
+            String date;
+            String path;
+
+            int idColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media._ID);
+
+            int bucketColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+
+            int displayNameColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.DISPLAY_NAME);
+
+            int dataColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.DATA);
+
+            int photoIDColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.PICASA_ID);
+
+            int dateColumn = cur.getColumnIndex(
+                    MediaStore.Images.Media.DATE_TAKEN);
+
+            do {
+                // Get the field values
+                int id = cur.getInt(idColumn);
+                name = cur.getString(displayNameColumn);
+                bucket = cur.getString(bucketColumn);
+                date = cur.getString(dateColumn);
+                path = cur.getString(dataColumn);
+
+                if(!lastBucketName.equals("") && !bucket.equals(lastBucketName))
+                {
+                    Album album = new Album();
+                    album.setName(lastBucketName);
+                    album.setPhotosList(photos);
+                    Log.i("album1", lastBucketName + " " + cur.getString(dataColumn));
+                    albums.add(album);
+                    photos = new ArrayList<>();
+                }
+//                else
+                {
+                    Photo photo = new Photo();
+                    photo.setName(name);
+                    int photoID = cur.getInt(photoIDColumn);
+                    photo.setUri(Uri.withAppendedPath(
+                            MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, "" + photoID));
+
+                    Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(),
+                            id, MediaStore.Images.Thumbnails.MINI_KIND, null);
+                    photo.setThumbnail(bm);
+
+                    photos.add(photo);
+                }
+                if(cur.isLast())
+                {
+                    Album album = new Album();
+                    album.setName(bucket);
+                    album.setPhotosList(photos);
+                    Log.i("album2", bucket);
+                    albums.add(album);
+                }
+                // Do something with the values.
+//                Log.i("ListingImages", " bucket=" + bucket + "|" + name
+//                        + "  date_taken=" + date);
+                lastBucketName = bucket;
+            } while (cur.moveToNext());
+
+        }
     }
 }

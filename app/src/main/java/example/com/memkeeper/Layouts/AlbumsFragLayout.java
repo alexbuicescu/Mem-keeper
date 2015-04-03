@@ -80,7 +80,15 @@ public class AlbumsFragLayout extends BaseFragment {
         }
     }
 
-    private void updateView()
+    public void refresh()
+    {
+        if(albumsGridItemAdapter != null)
+        {
+            albumsGridItemAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void updateView()
     {
         if (albumsGridItemAdapter == null)
         {

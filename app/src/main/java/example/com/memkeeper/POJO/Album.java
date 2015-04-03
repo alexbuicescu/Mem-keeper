@@ -2,6 +2,7 @@ package example.com.memkeeper.POJO;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +32,11 @@ public class Album {
     }
 
     public Bitmap getThumbnail() {
-        return thumbnail;
+        if(photosList != null && !photosList.isEmpty())
+        {
+            return photosList.get(0).getThumbnail();
+        }
+        return null;
     }
 
     public void setThumbnail(Bitmap thumbnail) {
@@ -52,5 +57,14 @@ public class Album {
 
     public void setNrSelectedPhotos(int nrSelectedPhotos) {
         this.nrSelectedPhotos = nrSelectedPhotos;
+    }
+
+    public void addPhoto(Photo photo)
+    {
+        if(photosList == null)
+        {
+            photosList = new ArrayList<>();
+        }
+        photosList.add(photo);
     }
 }
