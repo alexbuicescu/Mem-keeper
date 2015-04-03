@@ -16,6 +16,7 @@ public class Memory {
     private List<String> imagesPaths;
     private List<String> longitude;
     private List<String> latitude;
+    private List<String> friends;
     private String locationOne;
     private String locationTwo;
 
@@ -97,5 +98,13 @@ public class Memory {
 
     public void setLocationTwo(String locationTwo) {
         this.locationTwo = locationTwo;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
     }
 }

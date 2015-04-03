@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MEMORY_PHOTOS_PATHS = "memory_photos_paths";
     public static final String COLUMN_MEMORY_LOCATION_ONE = "memory_location_one";
     public static final String COLUMN_MEMORY_LOCATION_TWO = "memory_location_two";
+    public static final String COLUMN_MEMORY_FRIENDS = "memory_friends";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -51,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_MEMORY_LOCATION_LONGITUDE + " text, " +
                         COLUMN_MEMORY_COVER_PHOTO + " text, " +
                         COLUMN_MEMORY_PHOTOS_PATHS + " text, " +
+                        COLUMN_MEMORY_FRIENDS + " text, " +
                         COLUMN_MEMORY_LOCATION_ONE + " text, " +
                         COLUMN_MEMORY_LOCATION_TWO + " text)"
         );
@@ -94,6 +96,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             contentValues.put(COLUMN_MEMORY_LOCATION_LATITUDE, latitude);
 
+            String friends = "";
+            for(String friend : memory.getFriends())
+            {
+                friends += friend + "--";
+            }
+            contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
+
             contentValues.put(COLUMN_MEMORY_LOCATION_ONE, memory.getLocationOne());
             contentValues.put(COLUMN_MEMORY_LOCATION_TWO, memory.getLocationTwo());
 
@@ -121,6 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Integer columnCoverPhoto = cursor.getColumnIndex(COLUMN_MEMORY_COVER_PHOTO);
             Integer columnLocationOne = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_ONE);
             Integer columnLocationTwo = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_TWO);
+            Integer columnFriends = cursor.getColumnIndex(COLUMN_MEMORY_FRIENDS);
 //            Integer columnPhotosPaths = cursor.getColumnIndex(COLUMN_MEMORY_PHOTOS_PATHS);
 //            Integer columnLatitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LATITUDE);
 //            Integer columnLongitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LONGITUDE);
@@ -132,6 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String coverPhoto = cursor.getString(columnCoverPhoto);
                     String locationOne = cursor.getString(columnLocationOne);
                     String locationTwo = cursor.getString(columnLocationTwo);
+                    String friends = cursor.getString(columnFriends);
 //                    String photosPaths = cursor.getString(columnPhotosPaths);
 //                    String latitude = cursor.getString(columnLatitude);
 //                    String longitude = cursor.getString(columnLongitude);
@@ -142,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     memory.setCoverImagePath(coverPhoto);
                     memory.setLocationOne(locationOne);
                     memory.setLocationTwo(locationTwo);
+                    memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
 //                    memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
 //                    memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
 //                    memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
@@ -170,6 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             COLUMN_MEMORY_LOCATION_LONGITUDE,
                             COLUMN_MEMORY_COVER_PHOTO,
                             COLUMN_MEMORY_PHOTOS_PATHS,
+                            COLUMN_MEMORY_FRIENDS,
                             COLUMN_MEMORY_LOCATION_ONE,
                             COLUMN_MEMORY_LOCATION_TWO,
                     },
@@ -185,6 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Integer columnPhotosPaths = cursor.getColumnIndex(COLUMN_MEMORY_PHOTOS_PATHS);
             Integer columnLatitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LATITUDE);
             Integer columnLongitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LONGITUDE);
+            Integer columnFriends = cursor.getColumnIndex(COLUMN_MEMORY_FRIENDS);
 
             if (cursor.moveToFirst()) {
                 do {
@@ -197,6 +211,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String photosPaths = cursor.getString(columnPhotosPaths);
                     String latitude = cursor.getString(columnLatitude);
                     String longitude = cursor.getString(columnLongitude);
+                    String friends = cursor.getString(columnFriends);
 
                     Memory memory = new Memory();
                     memory.setId(id);
@@ -207,6 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
                     memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
                     memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
+                    memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
 
                     return memory;
                 } while (cursor.moveToNext());
@@ -249,6 +265,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 latitude += location + "--";
             }
             contentValues.put(COLUMN_MEMORY_LOCATION_LATITUDE, latitude);
+
+            String friends = "";
+            for(String friend : newMemory.getFriends())
+            {
+                friends += friend + "--";
+            }
+            contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
 
             contentValues.put(COLUMN_MEMORY_LOCATION_ONE, newMemory.getLocationOne());
             contentValues.put(COLUMN_MEMORY_LOCATION_TWO, newMemory.getLocationTwo());

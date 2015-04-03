@@ -20,6 +20,10 @@
             android:name=".Activities.MemoryActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".Activities.NewMemoryActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

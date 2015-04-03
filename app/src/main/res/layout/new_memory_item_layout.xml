@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/new_memory_fragment_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/large_horizontal_padding"
+        android:layout_marginRight="@dimen/large_horizontal_padding"
+        android:text="Name:"
+        android:textColor="@color/blue_underline"
+        android:textSize="@dimen/text_size_small" />
+
+    <ImageView
+        android:id="@+id/new_memory_fragment_underline_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/blue_underline"/>
+
+    <EditText
+        android:id="@+id/new_memory_fragment_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/large_horizontal_padding"
+        android:paddingRight="@dimen/large_horizontal_padding"
+        android:textSize="@dimen/text_size_normal"/>
+
+    <LinearLayout
+        android:id="@+id/new_memory_fragment_add_new_friends_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <TextView
+        android:id="@+id/new_memory_fragment_add_new_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/small_vertical_padding"
+        android:paddingBottom="@dimen/small_vertical_padding"
+        android:paddingLeft="@dimen/large_horizontal_padding"
+        android:paddingRight="@dimen/large_horizontal_padding"
+        android:textSize="20sp"
+        android:text="Add New"/>
+</LinearLayout>
