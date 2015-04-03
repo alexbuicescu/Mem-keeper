@@ -13,6 +13,11 @@ public class Memory {
     private String coverImagePath;
     private int id;
     private List<Bitmap> images;
+    private List<String> imagesPaths;
+    private List<String> longitude;
+    private List<String> latitude;
+    private String locationOne;
+    private String locationTwo;
 
     public String getName() {
         return name;
@@ -52,5 +57,45 @@ public class Memory {
 
     public void setCoverImagePath(String coverImagePath) {
         this.coverImagePath = coverImagePath;
+    }
+
+    public List<String> getImagesPaths() {
+        return imagesPaths;
+    }
+
+    public void setImagesPaths(List<String> imagesPaths) {
+        this.imagesPaths = imagesPaths;
+    }
+
+    public List<String> getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(List<String> latitude) {
+        this.latitude = latitude;
+    }
+
+    public List<String> getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(List<String> longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLocationOne() {
+        return locationOne;
+    }
+
+    public void setLocationOne(String locationOne) {
+        this.locationOne = locationOne;
+    }
+
+    public String getLocationTwo() {
+        return locationTwo;
+    }
+
+    public void setLocationTwo(String locationTwo) {
+        this.locationTwo = locationTwo;
     }
 }
