@@ -302,7 +302,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         {
             newPhotoView2.setVisibility(View.VISIBLE);
             newPhotoView3.setVisibility(View.INVISIBLE);
-            image2ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(0).getThumbnail());
+            image2ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
         }
 //        if(PhotoUtils.getSelectedPhotos().size() > 2)
 //        {
