@@ -13,6 +13,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/new_memory_fragment_cover_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher"/>
+            </RelativeLayout>
+
             <include
                 android:id="@+id/new_memory_fragment_name_container"
                 android:layout_width="match_parent"

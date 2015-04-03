@@ -7,6 +7,7 @@ import android.net.Uri;
  * Created by Alexandru on 03-Apr-15.
  */
 public class Photo {
+    private int photoId;
     private String name;
     private String path;
     private Uri uri;
@@ -60,5 +61,13 @@ public class Photo {
 
     public void setUri(Uri uri) {
         this.uri = uri;
+    }
+
+    public int getPhotoId() {
+        return photoId;
+    }
+
+    public void setPhotoId(int photoId) {
+        this.photoId = photoId;
     }
 }

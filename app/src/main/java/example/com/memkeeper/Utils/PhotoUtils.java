@@ -126,6 +126,7 @@ public class PhotoUtils {
                     Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(),
                             id, MediaStore.Images.Thumbnails.MINI_KIND, null);
                     photo.setThumbnail(bm);
+                    photo.setPhotoId(id);
 
                     photos.add(photo);
                 }

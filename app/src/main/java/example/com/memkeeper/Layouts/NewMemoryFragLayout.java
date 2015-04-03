@@ -2,12 +2,14 @@ package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -27,6 +29,7 @@ import java.util.TimeZone;
 
 import example.com.memkeeper.Activities.AddPhotosActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
+import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.MemoriesUtils;
 import example.com.memkeeper.Utils.PhotoUtils;
@@ -38,6 +41,7 @@ public class NewMemoryFragLayout extends BaseFragment {
 
 	public interface OnNewMemoryFragmentListener {
 		public void onAddPhotosClicked();
+        public void onChangeCoverClicked();
 	}
 
     private Activity context;
@@ -46,6 +50,10 @@ public class NewMemoryFragLayout extends BaseFragment {
 	private View view;
     private ArrayList<EditText> friendsEditText = new ArrayList<>();
     private LayoutInflater inflater;
+
+    private ImageView coverImageView;
+    private Photo coverPhoto;
+
     private ImageView image1ImageView;
     private ImageView image2ImageView;
     private ImageView image3ImageView;
@@ -147,6 +155,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         memoryDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                 DatePickerDialog datePicker = new DatePickerDialog(context,
                         R.style.AppTheme, datePickerListener,
@@ -177,6 +186,27 @@ public class NewMemoryFragLayout extends BaseFragment {
 //            }
 //        });
         initPhotos(finalMemoryItem2, photosContainer);
+
+        coverImageView = (ImageView) view.findViewById(R.id.new_memory_fragment_cover_image_view);
+        coverImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+                listener.onChangeCoverClicked();
+            }
+        });
+        coverImageView.requestFocus();
+    }
+
+    public void initCover(Photo coverPhoto)
+    {
+        if(coverPhoto == null)
+        {
+        }
+        else
+        {
+            coverImageView.setImageBitmap(coverPhoto.getThumbnail());
+        }
     }
 
     private void initFriends(final ViewGroup finalMemoryItem, final LinearLayout friendsContainer)
@@ -268,6 +298,7 @@ public class NewMemoryFragLayout extends BaseFragment {
     {
 //        Intent myIntent = new Intent(getActivity(), AddPhotosActivity.class);
 //        context.startActivity(myIntent);
+        hideKeyboard();
         listener.onAddPhotosClicked();
     }
 
@@ -326,4 +357,12 @@ public class NewMemoryFragLayout extends BaseFragment {
             memoryDatePicker.setText(day1 + "/" + month1 + "/" + year1);
         }
     };
+
+
+    private void hideKeyboard()
+    {
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(coverImageView.getWindowToken(), 0);
+    }
 }

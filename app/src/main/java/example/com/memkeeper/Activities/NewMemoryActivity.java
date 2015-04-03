@@ -1,14 +1,18 @@
 package example.com.memkeeper.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import example.com.memkeeper.Layouts.AlbumsFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.Layouts.PhotosFragLayout;
+import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.PhotoUtils;
 
@@ -21,6 +25,8 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     AlbumsFragLayout layoutAlbums;
     PhotosFragLayout layoutPhotos;
     boolean isInAlbum;
+    boolean selectCover;
+    Photo lastCoverPhoto;
 
 
     @Override
@@ -29,6 +35,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
         setContentView(R.layout.holder_frag_gallery);
 
         isInAlbum = false;
+        selectCover = false;
         layoutNewMemory = new NewMemoryFragLayout();//(NewMemoryFragLayout) getSupportFragmentManager().findFragmentById(R.id.new_memory_fragment);
 //        layoutAlbums = new AlbumsFragLayout(); //(AlbumsFragLayout) getSupportFragmentManager().findFragmentById(R.id.albums_fragment);
         getSupportFragmentManager().beginTransaction()
@@ -41,7 +48,17 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     {
         if(!isInAlbum)
         {
-            layoutNewMemory.updatePhotos();
+            if(!selectCover)
+            {
+                layoutNewMemory.updatePhotos();
+            }
+            else
+            {
+                if(lastCoverPhoto != null)
+                {
+                    lastCoverPhoto.setSelected(false);
+                }
+            }
             super.onBackPressed();
         }
         else
@@ -92,17 +109,31 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     @Override
     public void onPhotoClicked(int position) {
 
-        if(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).isSelected())
-        {
-            PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getNrSelectedPhotos() + 1);
-            PhotoUtils.addSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position));
+        if(!selectCover) {
+            if (PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).isSelected()) {
+                PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getNrSelectedPhotos() + 1);
+                PhotoUtils.addSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position));
+            } else {
+                PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getNrSelectedPhotos() - 1);
+                PhotoUtils.removeSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position));
+            }
+            layoutAlbums.refresh();
         }
         else
         {
-            PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getNrSelectedPhotos() - 1);
-            PhotoUtils.removeSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position));
+            if(lastCoverPhoto == null)
+            {
+                lastCoverPhoto = PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position);
+                lastCoverPhoto.setSelected(true);
+            }
+            else
+            {
+                lastCoverPhoto.setSelected(false);
+                lastCoverPhoto = PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position);
+                lastCoverPhoto.setSelected(true);
+            }
+            layoutNewMemory.initCover(lastCoverPhoto);
         }
-        layoutAlbums.refresh();
     }
 
     @Override
@@ -114,8 +145,25 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
                 .addToBackStack("some name")
                 .commit();
         isInAlbum = false;
+        selectCover = false;
 
 //        Intent myIntent = new Intent(NewMemoryActivity.this, AddPhotosActivity.class);
 //        this.startActivity(myIntent);
+    }
+
+    @Override
+    public void onChangeCoverClicked() {
+
+        layoutAlbums = new AlbumsFragLayout();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, layoutAlbums)
+                .addToBackStack("some name")
+                .commit();
+        isInAlbum = false;
+        selectCover = true;
+        if(lastCoverPhoto != null)
+        {
+            lastCoverPhoto.setSelected(true);
+        }
     }
 }
