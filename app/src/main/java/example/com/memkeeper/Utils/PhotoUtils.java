@@ -94,15 +94,17 @@ public class PhotoUtils {
         findFilesInDir(targetDirector);
     }
 
-    private static void findFilesInDir(File targetDirector)
+    private static boolean findFilesInDir(File targetDirector)
     {
+        boolean foundPhoto = false;
         List<Photo> photos = new ArrayList<>();
 
         File[] files = targetDirector.listFiles();
         for (File file : files){
             if(file.isFile()) {
-                if (file.getAbsolutePath().endsWith(".jpg")) {// || file.getAbsolutePath().endsWith(".png")) {
+                if (file.getAbsolutePath().endsWith(".jpg") || file.getAbsolutePath().endsWith(".png")) {
                     Log.i("photos", file.getAbsolutePath());
+                    foundPhoto = true;
 
                     Photo photo = new Photo();
                     photo.setName(file.getName());
@@ -113,7 +115,10 @@ public class PhotoUtils {
             }
             else
             {
-                findFilesInDir(new File(file.getAbsolutePath() + "/"));
+                if(!file.getName().startsWith("."))
+                {
+                    findFilesInDir(new File(file.getAbsolutePath() + "/"));
+                }
             }
         }
         if(!photos.isEmpty())
@@ -122,8 +127,10 @@ public class PhotoUtils {
             album.setName(targetDirector.getName());
             album.setPath(targetDirector.getAbsolutePath());
             album.setPhotosList(photos);
+            album.setThumbnail(decodeSampledBitmapFromUri(photos.get(0).getPath(), 200, 200));
             albums.add(album);
         }
+        return foundPhoto;
     }
 
 }

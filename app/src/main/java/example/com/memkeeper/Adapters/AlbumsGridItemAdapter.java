@@ -77,7 +77,7 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        holder.thumbnailImageView.setImageBitmap(albums.get(position).getThumbnail());
+        holder.thumbnailImageView.setImageBitmap(albums.get(position).getThumbnail());
         holder.countTextView.setText(albums.get(position).getPhotosList().size() + "");
         holder.albumName.setText(albums.get(position).getName());
 
