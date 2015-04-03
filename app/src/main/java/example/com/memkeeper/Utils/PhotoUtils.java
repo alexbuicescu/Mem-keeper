@@ -21,6 +21,7 @@ import example.com.memkeeper.POJO.Photo;
  */
 public class PhotoUtils {
     private static List<Album> albums;
+    private static List<Photo> selectedPhotos;
     private static int currentAlbum;
 
     public static List<Album> getAlbums() {
@@ -143,5 +144,30 @@ public class PhotoUtils {
             } while (cur.moveToNext());
 
         }
+    }
+
+    public static List<Photo> getSelectedPhotos() {
+        return selectedPhotos;
+    }
+
+    public static void setSelectedPhotos(List<Photo> selectedPhotos) {
+        PhotoUtils.selectedPhotos = selectedPhotos;
+    }
+
+    public static void addSelectedPhotos(Photo photo)
+    {
+        if(PhotoUtils.selectedPhotos == null)
+        {
+            PhotoUtils.selectedPhotos = new ArrayList<>();
+        }
+        PhotoUtils.selectedPhotos.add(photo);
+    }
+    public static void removeSelectedPhotos(Photo photo)
+    {
+        if(PhotoUtils.selectedPhotos == null)
+        {
+            PhotoUtils.selectedPhotos = new ArrayList<>();
+        }
+        PhotoUtils.selectedPhotos.remove(photo);
     }
 }

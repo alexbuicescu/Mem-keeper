@@ -25,6 +25,7 @@ import example.com.memkeeper.Activities.AddPhotosActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.MemoriesUtils;
+import example.com.memkeeper.Utils.PhotoUtils;
 
 /**
  * Created by Alexandru on 03-Apr-15.
@@ -32,7 +33,7 @@ import example.com.memkeeper.Utils.MemoriesUtils;
 public class NewMemoryFragLayout extends BaseFragment {
 
 	public interface OnNewMemoryFragmentListener {
-//		public void onPhotoClicked(int position);
+		public void onAddPhotosClicked();
 	}
 
     private Activity context;
@@ -235,7 +236,52 @@ public class NewMemoryFragLayout extends BaseFragment {
 
     private void openGallery()
     {
-        Intent myIntent = new Intent(getActivity(), AddPhotosActivity.class);
-        context.startActivity(myIntent);
+//        Intent myIntent = new Intent(getActivity(), AddPhotosActivity.class);
+//        context.startActivity(myIntent);
+        listener.onAddPhotosClicked();
+    }
+
+    public void updatePhotos()
+    {
+        if(PhotoUtils.getSelectedPhotos().size() > 0)
+        {
+            newPhotoView1.setVisibility(View.VISIBLE);
+            newPhotoView2.setVisibility(View.INVISIBLE);
+            newPhotoView3.setVisibility(View.INVISIBLE);
+            image1ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(0).getThumbnail());
+            image2ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
+        }
+        else
+        {
+            newPhotoView1.setVisibility(View.VISIBLE);
+            newPhotoView2.setVisibility(View.INVISIBLE);
+            newPhotoView3.setVisibility(View.INVISIBLE);
+            image1ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
+        }
+
+        if(PhotoUtils.getSelectedPhotos().size() > 1)
+        {
+            newPhotoView2.setVisibility(View.VISIBLE);
+            newPhotoView3.setVisibility(View.VISIBLE);
+            image1ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(0).getThumbnail());
+            image2ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(1).getThumbnail());
+            image3ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
+        }
+        else
+        if(PhotoUtils.getSelectedPhotos().size() == 1)
+        {
+            newPhotoView2.setVisibility(View.VISIBLE);
+            newPhotoView3.setVisibility(View.INVISIBLE);
+            image2ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(0).getThumbnail());
+        }
+//        if(PhotoUtils.getSelectedPhotos().size() > 2)
+//        {
+//            newPhotoView1.setVisibility(View.VISIBLE);
+//            newPhotoView2.setVisibility(View.VISIBLE);
+//            newPhotoView3.setVisibility(View.VISIBLE);
+//            image1ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(0).getThumbnail());
+//            image2ImageView.setImageBitmap(PhotoUtils.getSelectedPhotos().get(1).getThumbnail());
+//            image3ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
+//        }
     }
 }
