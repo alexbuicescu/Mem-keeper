@@ -28,6 +28,7 @@ import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
 import example.com.memkeeper.Utils.PhotoUtils;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by Alexandru on 03-Apr-15.
@@ -43,7 +44,7 @@ public class FriendsFragLayout extends BaseFragment {
 	private OnFriendsFragmentListener listener;
 	private View view;
     private LayoutInflater inflater;
-    private ListView friendsListView;
+    private StickyListHeadersListView friendsListView;
     private FriendsListItemAdapter friendsListItemAdapter;
 
 	@Override
@@ -99,8 +100,9 @@ public class FriendsFragLayout extends BaseFragment {
 //    }
 
     private void updateView() {
-        friendsListView = (ListView) view.findViewById(R.id.friends_fragment_list_view);
+        friendsListView = (StickyListHeadersListView) view.findViewById(R.id.friends_fragment_list_view);
         friendsListItemAdapter = new FriendsListItemAdapter(getActivity(), FriendsUtils.getFriendList());
         friendsListView.setAdapter(friendsListItemAdapter);
+        friendsListView.setFastScrollEnabled(true);
     }
 }

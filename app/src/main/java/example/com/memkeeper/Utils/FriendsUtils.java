@@ -17,6 +17,7 @@ public class FriendsUtils {
         f.setName("nume1");
         friendList.add(f);
         friendList.add(f);
+        f.setName("anume");
         friendList.add(f);
         return friendList;
     }

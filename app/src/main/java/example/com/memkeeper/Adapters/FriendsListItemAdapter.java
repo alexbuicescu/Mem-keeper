@@ -1,6 +1,7 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,7 +151,7 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.titleTextView.setText("Title: " + currentItems.get(position));
+        holder.titleTextView.setText(currentItems.get(position).getName());
 
         return convertView;
     }
