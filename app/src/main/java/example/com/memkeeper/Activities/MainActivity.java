@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -171,7 +172,9 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
         findMemoryButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+                // Vibrate for 500 milliseconds
+                vibrator.vibrate(500);
                 ViewUtils.launchRingDialog(activity, new Runnable() {
                     @Override
                     public void run() {
@@ -197,13 +200,21 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                             {
                                 Log.i("data", fileData + "");
                                 newPhotos.add(String.valueOf(photo.getPhotoId()));
+                                Random random = new Random();
+                                if(newPhotos.size() > 2 + random.nextInt(5))
+                                {
+                                    if(random.nextInt(4) == 0)
+                                    {
+                                        break;
+                                    }
+                                }
                             }
                             else
                             {
                                 Random random = new Random();
-                                if(newPhotos.size() > 2 + random.nextInt(3))
+                                if(newPhotos.size() > 2 + random.nextInt(5))
                                 {
-                                    if(random.nextInt(3) == 0)
+                                    if(random.nextInt(4) == 0)
                                     {
                                         break;
                                     }
@@ -232,12 +243,16 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                                 public void run() {
                                     layoutMemoryLane.refresh();
                                     Toast.makeText(activity, "We found a memory", Toast.LENGTH_LONG).show();
+                                    vibrator.vibrate(200);
+
+                                    vibrator.vibrate(200);
                                 }
                             });
                         }
                         else
                         {
                             Toast.makeText(activity, "Sry, we haven't found a memory, but don't be sad, you can try again :)", Toast.LENGTH_LONG).show();
+                            vibrator.vibrate(400);
                         }
                     }
                 });

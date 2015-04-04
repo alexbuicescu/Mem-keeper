@@ -82,6 +82,7 @@ public class CommentsFragLayout extends BaseFragment {
                                 dbHelper.getMemory(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId()));
                         updateView();
                         commentEditText.setText("");
+                        commentsListItemAdapter.setDoneAnimating(true);
                     }
                 }
             });

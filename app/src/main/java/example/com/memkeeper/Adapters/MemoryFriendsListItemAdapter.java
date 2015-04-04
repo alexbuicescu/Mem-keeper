@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -71,6 +74,12 @@ public class MemoryFriendsListItemAdapter extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.friendsTextView= (TextView) convertView.findViewById(R.id.memory_friends_list_view_item_friend_text_view);
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_right_left);
+//            animation.setDuration(500);
+            animation.setStartOffset(position * 200);
+            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            convertView.startAnimation(animation);
 
             convertView.setTag(holder);
         } else {

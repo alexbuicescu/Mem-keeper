@@ -6,6 +6,9 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ public class CommentsListItemAdapter extends BaseAdapter {
      * The list of memories.
      */
     protected List<String> commentsList;
+    private boolean doneAnimating;
 
     public CommentsListItemAdapter(Context context, List<String> commentsList) {
         this.context = context;
@@ -76,6 +80,14 @@ public class CommentsListItemAdapter extends BaseAdapter {
 
             holder.commentTextView = (TextView) convertView.findViewById(R.id.comments_list_view_item_comment_text_view);
 
+            if(!doneAnimating) {
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_right_left);
+//            animation.setDuration(500);
+                animation.setStartOffset(position * 200);
+                animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                convertView.startAnimation(animation);
+            }
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -84,6 +96,10 @@ public class CommentsListItemAdapter extends BaseAdapter {
         holder.commentTextView.setText(commentsList.get(position));
 
         return convertView;
+    }
+
+    public void setDoneAnimating(boolean doneAnimating) {
+        this.doneAnimating = doneAnimating;
     }
 
     private class ViewHolder {
