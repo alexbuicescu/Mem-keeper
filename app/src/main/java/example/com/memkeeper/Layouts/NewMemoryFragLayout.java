@@ -627,6 +627,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         {
             if(dbHelper.updateMemory(memory))
             {
+                MemoriesUtils.getMemoryList().set(MemoriesUtils.getCurrentMemory(), dbHelper.getMemory(memory.getId()));
                 return true;
             } else {
                 Log.i("memory", "update failed");

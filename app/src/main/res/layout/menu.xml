@@ -92,7 +92,7 @@
                 android:layout_height="28dip"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/settings" />
+                android:background="@drawable/clover" />
         </RelativeLayout>
     </LinearLayout>
 

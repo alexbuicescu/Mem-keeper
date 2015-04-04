@@ -25,6 +25,7 @@ import com.facebook.widget.LoginButton;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.MyReceiver;
 import example.com.memkeeper.POJO.Friend;
 import example.com.memkeeper.POJO.Memory;
+import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
 import example.com.memkeeper.Utils.MemoriesUtils;
@@ -152,12 +154,81 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
     {
         ViewGroup topBarLayout = (ViewGroup) findViewById(R.id.activity_main_topbar_layout);
         RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_main_back_container);
+        RelativeLayout findMemoryButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_main_find_memory_button);
         topBarTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_main_back_text_view);
 
         backButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainMenu.toggle();
+            }
+        });
+
+        final Activity activity = this;
+
+        findMemoryButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ViewUtils.launchRingDialog(activity, new Runnable() {
+                    @Override
+                    public void run() {
+                        List<Photo> photos = PhotoUtils.queryPhotosWithoutAlbum(activity);
+
+                        Date lastDate = null;
+                        List<String> newPhotos = new ArrayList<String>();
+                        for(Photo photo : photos)
+                        {
+                            if(lastDate == null)
+                            {
+                                long date2 = Long.parseLong(photo.getDate());
+                                //You can even convert it to a Date if you want
+                                lastDate = new Date(date2);
+
+                                continue;
+                            }
+                            long date2 = Long.parseLong(photo.getDate());
+                            //You can even convert it to a Date if you want
+                            Date fileData = new Date(date2);
+                            long diffDays = (fileData.getTime() - lastDate.getTime()) / (24 * 60 * 60 * 1000);
+                            if(diffDays <= 2)
+                            {
+                                Log.i("data", fileData + "");
+                                newPhotos.add(String.valueOf(photo.getPhotoId()));
+                            }
+                            else
+                            {
+                                if(newPhotos.size() > 3)
+                                {
+                                    break;
+                                }
+                                newPhotos.clear();
+                            }
+                            lastDate = fileData;
+
+//                            if(photo.getd)
+                        }
+
+                        if(newPhotos.size() > 0)
+                        {
+                            Memory memory = new Memory();
+                            memory.setName("Awesome Memory");
+                            memory.setDate(lastDate.getYear() + "/" + lastDate.getMonth() + "/" + lastDate.getDay());
+                            memory.setLocationOne("Somewhere");
+                            memory.setLocationTwo("Anywhere");
+                            memory.setImagesPaths(newPhotos);
+                            DatabaseHelper dbHelper = new DatabaseHelper(activity);
+                            dbHelper.insertMemory(memory);
+                            MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    layoutMemoryLane.refresh();
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
     }
@@ -180,6 +251,23 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 
     private void initSlidingMenuButtons() {
 
+        final Context context = this;
+        final Button findMemory = (Button) mainMenu.findViewById(R.id.menu_settings_button);
+        findMemory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mainMenu.toggle();
+                currentYear = "";
+                friend = "";
+                ViewUtils.launchRingDialog(context, new Runnable() {
+                    @Override
+                    public void run() {
+                        PhotoUtils.queryPhotosWithoutAlbum((Activity) getApplicationContext());
+                    }
+                });
+            }
+        });
         final Button menuFriends = (Button) mainMenu.findViewById(R.id.menu_see_your_friends_button);
         menuFriends.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,7 @@ public class Photo {
     private boolean isCover;
     private String longitude;
     private String latitude;
+    private String date;
 
     public String getName() {
         return name;
@@ -96,5 +97,13 @@ public class Photo {
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

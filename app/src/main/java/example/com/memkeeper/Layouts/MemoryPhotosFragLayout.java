@@ -152,6 +152,18 @@ public class MemoryPhotosFragLayout extends BaseFragment {
         }
     }
 
+    private void updateData()
+    {
+        TextView memoryNameTextView = (TextView) view.findViewById(R.id.memory_list_view_item_title_text_view);
+        memoryNameTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
+        TextView memoryDateTextView = (TextView) view.findViewById(R.id.memory_list_view_item_date_text_view);
+        memoryDateTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getDate());
+        TextView memoryFromTextView = (TextView) view.findViewById(R.id.memory_list_view_item_from_text_view);
+        memoryFromTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getLocationOne());
+        TextView memoryToTextView = (TextView) view.findViewById(R.id.memory_list_view_item_to_text_view);
+        memoryToTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getLocationTwo());
+    }
+
     private void initTopBar()
     {
         ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.memory_fragment_topbar);
@@ -191,6 +203,7 @@ public class MemoryPhotosFragLayout extends BaseFragment {
 
     private void updateView()
     {
+        updateData();
         if (memoryGridItemAdapter == null)
         {
             memoryGridItemAdapter = new MemoryGridItemAdapter(context,

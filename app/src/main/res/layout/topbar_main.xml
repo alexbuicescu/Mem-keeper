@@ -32,6 +32,21 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/topbar_main_find_memory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/normal_horizontal_padding"
+        android:background="@drawable/shape_topbar_btn_back"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:descendantFocusability="blocksDescendants">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/sel_btn_clover"/>
+    </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
