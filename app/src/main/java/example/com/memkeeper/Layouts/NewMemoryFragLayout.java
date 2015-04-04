@@ -328,6 +328,13 @@ public class NewMemoryFragLayout extends BaseFragment {
             }
         }
 
+        if(coverPhoto == null)
+        {
+            coverPhoto = new Photo();
+        }
+        coverPhoto.setPhotoId(Integer.parseInt(memory.getCoverImagePath()));
+        coverPhoto.setThumbnail(bm);
+
         updatePhotos();
     }
 
@@ -518,6 +525,7 @@ public class NewMemoryFragLayout extends BaseFragment {
     {
         DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
         Memory memory = new Memory();
+        memory.setId(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
         memory.setDate(memoryDatePicker.getText().toString());
         memory.setName(memoryNameEditText.getText().toString());
         memory.setLocationOne(memoryFromEditText.getText().toString());
@@ -526,11 +534,14 @@ public class NewMemoryFragLayout extends BaseFragment {
         {
             memory.setCoverImagePath(coverPhoto.getPhotoId() + "");
         }
+
         List<String> photosIDs = new ArrayList<>();
-        for(Photo photo : PhotoUtils.getSelectedPhotos())
-        {
-            photosIDs.add(String.valueOf(photo.getPhotoId()));
+        if(PhotoUtils.getSelectedPhotos() != null) {
+            for (Photo photo : PhotoUtils.getSelectedPhotos()) {
+                photosIDs.add(String.valueOf(photo.getPhotoId()));
+            }
         }
+
         memory.setImagesPaths(photosIDs);
         List<String> friends = new ArrayList<>();
         for(EditText editText : friendsEditText)
@@ -539,13 +550,21 @@ public class NewMemoryFragLayout extends BaseFragment {
         }
         memory.setFriends(friends);
 
-        if(dbHelper.insertMemory(memory))
+        if(NewMemoryActivity.isEdit == 1)
         {
-            return true;
+            if(dbHelper.updateMemory(memory))
+            {
+                return true;
+            } else {
+                Log.i("memory", "update failed");
+            }
         }
-        else
-        {
-            Log.i("memory", "insertion failed");
+        else {
+            if (dbHelper.insertMemory(memory)) {
+                return true;
+            } else {
+                Log.i("memory", "insertion failed");
+            }
         }
         return false;
     }

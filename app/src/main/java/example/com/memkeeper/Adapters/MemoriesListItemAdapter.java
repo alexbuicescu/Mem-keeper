@@ -85,9 +85,16 @@ public class MemoriesListItemAdapter extends BaseAdapter {
         holder.memoryFromTextView.setText(memoryList.get(position).getLocationOne());
         holder.memoryToTextView.setText(memoryList.get(position).getLocationTwo());
 
-        Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
-                Long.parseLong(memoryList.get(position).getCoverImagePath()), MediaStore.Images.Thumbnails.MINI_KIND, null);
-        holder.memoryCoverImageView.setImageBitmap(bm);
+        try {
+            Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
+                    Long.parseLong(memoryList.get(position).getCoverImagePath()), MediaStore.Images.Thumbnails.MINI_KIND, null);
+            holder.memoryCoverImageView.setImageBitmap(bm);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            holder.memoryCoverImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.upload_cover));
+        }
 
         return convertView;
     }

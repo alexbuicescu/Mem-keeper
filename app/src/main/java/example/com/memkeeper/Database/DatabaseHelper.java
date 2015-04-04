@@ -261,7 +261,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    private void updateMemory(int memoryId, Memory newMemory) {
+    public boolean updateMemory(Memory newMemory) {
         if (!mydb.isOpen()) {
             initDB();
         }
@@ -271,38 +271,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(COLUMN_MEMORY_NAME, newMemory.getName());
             contentValues.put(COLUMN_MEMORY_COVER_PHOTO, newMemory.getCoverImagePath());
 
-            String photosPaths = "";
-            for(String path : newMemory.getImagesPaths())
-            {
-                photosPaths += path + "--";
+            if(newMemory.getImagesPaths() != null) {
+                String photosPaths = "";
+                for (String path : newMemory.getImagesPaths()) {
+                    photosPaths += path + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_PHOTOS_PATHS, photosPaths);
             }
-            contentValues.put(COLUMN_MEMORY_PHOTOS_PATHS, photosPaths);
+            if(newMemory.getLongitude() != null) {
+                String longitude = "";
+                for (String location : newMemory.getLongitude()) {
+                    longitude += location + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_LOCATION_LONGITUDE, longitude);
+            }
 
-            String longitude = "";
-            for(String location : newMemory.getLongitude())
-            {
-                longitude += location + "--";
+            if(newMemory.getLatitude() != null) {
+                String latitude = "";
+                for (String location : newMemory.getLatitude()) {
+                    latitude += location + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_LOCATION_LATITUDE, latitude);
             }
-            contentValues.put(COLUMN_MEMORY_LOCATION_LONGITUDE, longitude);
 
-            String latitude = "";
-            for(String location : newMemory.getLatitude())
-            {
-                latitude += location + "--";
+            if(newMemory.getFriends() != null) {
+                String friends = "";
+                for (String friend : newMemory.getFriends()) {
+                    friends += friend + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
             }
-            contentValues.put(COLUMN_MEMORY_LOCATION_LATITUDE, latitude);
-
-            String friends = "";
-            for(String friend : newMemory.getFriends())
-            {
-                friends += friend + "--";
-            }
-            contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
 
             contentValues.put(COLUMN_MEMORY_DATE, newMemory.getDate());
             contentValues.put(COLUMN_MEMORY_LOCATION_ONE, newMemory.getLocationOne());
             contentValues.put(COLUMN_MEMORY_LOCATION_TWO, newMemory.getLocationTwo());
-            mydb.update(TABLE_NAME, contentValues, COLUMN_ID + " = ? ", new String[]{String.valueOf(memoryId)});
+            if(mydb.update(TABLE_NAME, contentValues, COLUMN_ID + " = ? ", new String[]{String.valueOf(newMemory.getId())}) == 0)
+            {
+                return false;
+            }
+            return true;
 
 //            mydb.insert(TABLE_NAME, null, contentValues);
 
@@ -313,6 +320,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
             mydb.close();
         }
+        return false;
     }
 
     public int numberOfRows() {
