@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 
@@ -534,7 +535,7 @@ public class NewMemoryFragLayout extends BaseFragment {
                 memoryDatePicker.setText("Select a lower value!");
                 return;
             }
-            memoryDatePicker.setText(day1 + "/" + month1 + "/" + year1);
+            memoryDatePicker.setText(year1 + "/" + month1 + "/" + day1);
         }
     };
 
@@ -551,9 +552,35 @@ public class NewMemoryFragLayout extends BaseFragment {
         DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
         Memory memory = new Memory();
         memory.setId(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
-        memory.setDate(memoryDatePicker.getText().toString());
+        if(memoryNameEditText.getText().toString().trim().equals(""))
+        {
+            memoryNameEditText.requestFocus();
+            memoryNameEditText.setError("Can't be empty!");
+            return false;
+        }
         memory.setName(memoryNameEditText.getText().toString());
+        if(memoryDatePicker.getText().toString().charAt(0) >= '0' && memoryDatePicker.getText().toString().charAt(0) <= '9')
+        {
+            memory.setDate(memoryDatePicker.getText().toString());
+        }
+        else
+        {
+            Toast.makeText(context, "Select a normal date....", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(memoryFromEditText.getText().toString().trim().equals(""))
+        {
+            memoryFromEditText.requestFocus();
+            memoryFromEditText.setError("Can't be empty!");
+            return false;
+        }
         memory.setLocationOne(memoryFromEditText.getText().toString());
+        if(memoryToEditText.getText().toString().trim().equals(""))
+        {
+            memoryToEditText.requestFocus();
+            memoryToEditText.setError("Can't be empty!");
+            return false;
+        }
         memory.setLocationTwo(memoryToEditText.getText().toString());
         if(coverPhoto != null)
         {
@@ -580,6 +607,12 @@ public class NewMemoryFragLayout extends BaseFragment {
         List<String> friends = new ArrayList<>();
         for(EditText editText : friendsEditText)
         {
+            if(editText.getText().toString().trim().equals(""))
+            {
+                editText.requestFocus();
+                editText.setError("Can't be empty!");
+                return false;
+            }
             friends.add(editText.getText().toString());
         }
         memory.setFriends(friends);
@@ -591,12 +624,14 @@ public class NewMemoryFragLayout extends BaseFragment {
                 return true;
             } else {
                 Log.i("memory", "update failed");
+                Toast.makeText(context, "update failed", Toast.LENGTH_LONG).show();
             }
         }
         else {
             if (dbHelper.insertMemory(memory)) {
                 return true;
             } else {
+                Toast.makeText(context, "insertion failed", Toast.LENGTH_LONG).show();
                 Log.i("memory", "insertion failed");
             }
         }

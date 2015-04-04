@@ -91,7 +91,9 @@ public class MemoryLaneFragLayout extends BaseFragment {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
 //        MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
         memoriesListItemAdapter.setMemoriesList(dbHelper.getAllMemories());
+        MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
         memoriesListItemAdapter.notifyDataSetChanged();
+        memoriesListView.setAdapter(memoriesListItemAdapter);
 //        context.runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
