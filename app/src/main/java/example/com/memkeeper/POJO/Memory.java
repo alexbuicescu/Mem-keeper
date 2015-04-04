@@ -2,6 +2,7 @@ package example.com.memkeeper.POJO;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class Memory {
     private List<String> longitude;
     private List<String> latitude;
     private List<String> friends;
+    private List<String> comments;
     private String date;
     private String locationOne;
     private String locationTwo;
@@ -115,5 +117,22 @@ public class Memory {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(String comment)
+    {
+        if(comments == null)
+        {
+            comments = new ArrayList<>();
+        }
+        comments.add(comment);
     }
 }

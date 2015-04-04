@@ -551,7 +551,13 @@ public class NewMemoryFragLayout extends BaseFragment {
     {
         DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
         Memory memory = new Memory();
-        memory.setId(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
+        try {
+            memory.setId(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         if(memoryNameEditText.getText().toString().trim().equals(""))
         {
             memoryNameEditText.requestFocus();

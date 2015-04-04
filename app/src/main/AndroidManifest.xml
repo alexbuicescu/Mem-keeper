@@ -43,6 +43,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name=".Activities.CommentsActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name=".Activities.CameraActivity"
             android:label="@string/app_name" >
         </activity>

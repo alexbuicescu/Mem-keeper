@@ -1,6 +1,7 @@
 package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +13,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Locale;
 
+import example.com.memkeeper.Activities.CommentsActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.POJO.Memory;
@@ -76,6 +79,23 @@ public class MemoryPhotosFragLayout extends BaseFragment {
             memoryPhotosGridView = (GridView) view.findViewById(R.id.activity_memory_photos_grid_view);
 
             noPhotosTextView = (TextView) view.findViewById(R.id.activity_memory_no_photos_text_view);
+            TextView nrCommentsTextView = (TextView) view.findViewById(R.id.memory_list_view_item_comments_nr_text_view);
+            if(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getComments() != null)
+            {
+                nrCommentsTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getComments().size() + "");
+            }
+            else
+            {
+                nrCommentsTextView.setText("0");
+            }
+            LinearLayout commentsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_comments_container);
+            commentsLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(context, CommentsActivity.class);
+                    context.startActivity(myIntent);
+                }
+            });
 
             memoryPhotosGridView.setOnItemClickListener(new OnItemClickListener() {
                 @Override

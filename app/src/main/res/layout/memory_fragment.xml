@@ -16,11 +16,94 @@
         android:layout_below="@+id/memory_fragment_topbar"
         android:text="See map"/>
 
+    <LinearLayout
+        android:id="@+id/memory_fragment_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/memory_fragment_see_map_button"
+        android:paddingLeft="@dimen/large_horizontal_padding"
+        android:paddingRight="@dimen/large_horizontal_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/memory_list_view_item_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/small_vertical_padding"
+            android:paddingBottom="@dimen/small_vertical_padding"
+            android:text="Memory"
+            android:textColor="@android:color/black"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/memory_list_view_item_date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/small_vertical_padding"
+            android:text="23/5/2014"/>
+
+        <LinearLayout
+            android:id="@+id/memory_list_view_item_location_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/small_vertical_padding"
+            android:clickable="true">
+            <TextView
+                android:id="@+id/memory_list_view_item_from_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/small_vertical_padding"
+                android:textSize="@dimen/text_size_small"
+                android:text="America"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"/>
+            <TextView
+                android:id="@+id/memory_list_view_item_to_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/small_vertical_padding"
+                android:textSize="@dimen/text_size_small"
+                android:text="Bucharest"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/memory_list_view_item_comments_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/small_horizontal_padding"
+            android:paddingRight="@dimen/small_horizontal_padding"
+            android:paddingBottom="@dimen/small_horizontal_padding"
+            android:paddingTop="@dimen/small_horizontal_padding"
+            android:background="@drawable/shape_topbar_btn_back"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/sel_btn_comments"/>
+            <TextView
+                android:id="@+id/memory_list_view_item_comments_nr_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/small_horizontal_padding"
+                android:layout_gravity="center"
+                android:textColor="@color/sel_text_black_white"
+                android:text="12"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <GridView
         android:id="@+id/activity_memory_photos_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/memory_fragment_see_map_button"
+        android:layout_below="@+id/memory_fragment_info_container"
         android:horizontalSpacing="@dimen/gallery_photo_horizontal_padding"
         android:verticalSpacing="@dimen/gallery_photo_vertical_padding"
         android:listSelector="@android:color/transparent"

@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MEMORY_LOCATION_TWO = "memory_location_two";
     public static final String COLUMN_MEMORY_DATE = "memory_date";
     public static final String COLUMN_MEMORY_FRIENDS = "memory_friends";
+    public static final String COLUMN_MEMORY_COMMENTS = "memory_comments";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -55,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_MEMORY_PHOTOS_PATHS + " text, " +
                         COLUMN_MEMORY_FRIENDS + " text, " +
                         COLUMN_MEMORY_DATE + " text, " +
+                        COLUMN_MEMORY_COMMENTS + " text, " +
                         COLUMN_MEMORY_LOCATION_ONE + " text, " +
                         COLUMN_MEMORY_LOCATION_TWO + " text)"
         );
@@ -108,6 +110,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
             }
 
+            if(memory.getComments() != null) {
+                String comments = "";
+                for (String comment : memory.getComments()) {
+                    comments += comment + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_COMMENTS, comments);
+            }
+
             contentValues.put(COLUMN_MEMORY_DATE, memory.getDate());
             contentValues.put(COLUMN_MEMORY_LOCATION_ONE, memory.getLocationOne());
             contentValues.put(COLUMN_MEMORY_LOCATION_TWO, memory.getLocationTwo());
@@ -138,6 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Integer columnLocationTwo = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_TWO);
             Integer columnFriends = cursor.getColumnIndex(COLUMN_MEMORY_FRIENDS);
             Integer columnDate = cursor.getColumnIndex(COLUMN_MEMORY_DATE);
+            Integer columnComments = cursor.getColumnIndex(COLUMN_MEMORY_COMMENTS);
 //            Integer columnPhotosPaths = cursor.getColumnIndex(COLUMN_MEMORY_PHOTOS_PATHS);
 //            Integer columnLatitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LATITUDE);
 //            Integer columnLongitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LONGITUDE);
@@ -151,6 +162,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String locationTwo = cursor.getString(columnLocationTwo);
                     String friends = cursor.getString(columnFriends);
                     String date = cursor.getString(columnDate);
+                    String comments = cursor.getString(columnComments);
 //                    String photosPaths = cursor.getString(columnPhotosPaths);
 //                    String latitude = cursor.getString(columnLatitude);
 //                    String longitude = cursor.getString(columnLongitude);
@@ -162,7 +174,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     memory.setLocationOne(locationOne);
                     memory.setLocationTwo(locationTwo);
                     memory.setDate(date);
-                    memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    if(friends != null)
+                    {
+                        memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    }
+                    if(comments != null)
+                    {
+                        memory.setComments(new ArrayList<>(Arrays.asList(comments.split("--"))));
+                    }
 //                    memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
 //                    memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
 //                    memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
@@ -194,6 +213,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             COLUMN_MEMORY_PHOTOS_PATHS,
                             COLUMN_MEMORY_FRIENDS,
                             COLUMN_MEMORY_DATE,
+                            COLUMN_MEMORY_COMMENTS,
                             COLUMN_MEMORY_LOCATION_ONE,
                             COLUMN_MEMORY_LOCATION_TWO,
                     },
@@ -211,6 +231,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Integer columnLongitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LONGITUDE);
             Integer columnFriends = cursor.getColumnIndex(COLUMN_MEMORY_FRIENDS);
             Integer columnDate = cursor.getColumnIndex(COLUMN_MEMORY_DATE);
+            Integer columnComments = cursor.getColumnIndex(COLUMN_MEMORY_COMMENTS);
 
             if (cursor.moveToFirst()) {
                 do {
@@ -225,6 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     String longitude = cursor.getString(columnLongitude);
                     String friends = cursor.getString(columnFriends);
                     String date = cursor.getString(columnDate);
+                    String comments = cursor.getString(columnComments);
 
                     Memory memory = new Memory();
                     memory.setId(id);
@@ -248,6 +270,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     if(friends != null)
                     {
                         memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    }
+                    if(comments != null)
+                    {
+                        memory.setComments(new ArrayList<>(Arrays.asList(comments.split("--"))));
                     }
 
                     return memory;
@@ -300,6 +326,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     friends += friend + "--";
                 }
                 contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
+            }
+
+            if(newMemory.getComments() != null) {
+                String comments = "";
+                for (String comment : newMemory.getComments()) {
+                    comments += comment + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_COMMENTS, comments);
             }
 
             contentValues.put(COLUMN_MEMORY_DATE, newMemory.getDate());

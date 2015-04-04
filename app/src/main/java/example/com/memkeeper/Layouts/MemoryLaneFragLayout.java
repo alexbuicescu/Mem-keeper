@@ -146,42 +146,38 @@ public class MemoryLaneFragLayout extends BaseFragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                View c = memoriesListView.getChildAt(0);
-                int scrolly = -c.getTop() + memoriesListView.getFirstVisiblePosition() * c.getHeight();
+                try {
+                    View c = memoriesListView.getChildAt(0);
+                    int scrolly = -c.getTop() + memoriesListView.getFirstVisiblePosition() * c.getHeight();
 //                if(scrolly  > lastScrollY)
 //                {
-                addNewMemoryView.setY((float) (addNewMemoryView.getY() + (scrolly - lastScrollY) / 6));
-                if(scrolly  > lastScrollY &&
-                        addNewMemoryView.getY() < initialPositionAddNewButton + addNewMemoryView.getHeight())
-                {
+                    addNewMemoryView.setY((float) (addNewMemoryView.getY() + (scrolly - lastScrollY) / 6));
+                    if (scrolly > lastScrollY &&
+                            addNewMemoryView.getY() < initialPositionAddNewButton + addNewMemoryView.getHeight()) {
 //                    addNewMemoryView.setY(addNewMemoryView.getY() + (scrolly - lastScrollY) / 2);
-                }
-                else
-                if(scrolly  > lastScrollY &&
-                        addNewMemoryView.getY() > initialPositionAddNewButton + addNewMemoryView.getHeight())
-                {
-                    addNewMemoryView.setY(initialPositionAddNewButton + addNewMemoryView.getHeight());
-                }
-                else
-                if(scrolly  < lastScrollY &&
-                        addNewMemoryView.getY() > initialPositionAddNewButton)
-                {
+                    } else if (scrolly > lastScrollY &&
+                            addNewMemoryView.getY() > initialPositionAddNewButton + addNewMemoryView.getHeight()) {
+                        addNewMemoryView.setY(initialPositionAddNewButton + addNewMemoryView.getHeight());
+                    } else if (scrolly < lastScrollY &&
+                            addNewMemoryView.getY() > initialPositionAddNewButton) {
 //                    addNewMemoryView.setY(addNewMemoryView.getY() + (scrolly - lastScrollY) / 2);
-                }
-                else
-                if(scrolly  < lastScrollY &&
-                        addNewMemoryView.getY() <= initialPositionAddNewButton)
-                {
-                    addNewMemoryView.setY(initialPositionAddNewButton);
-                }
+                    } else if (scrolly < lastScrollY &&
+                            addNewMemoryView.getY() <= initialPositionAddNewButton) {
+                        addNewMemoryView.setY(initialPositionAddNewButton);
+                    }
 //                }
 //                else
 //                if(scrolly  < lastScrollY)
 //                {
 //                    addNewMemoryView.setY(addNewMemoryView.getY() - scrolly + lastScrollY);
 //                }
-                Log.i("scroll", scrolly + "");
-                lastScrollY = scrolly;
+                    Log.i("scroll", scrolly + "");
+                    lastScrollY = scrolly;
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
     }

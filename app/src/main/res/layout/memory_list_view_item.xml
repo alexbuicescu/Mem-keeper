@@ -9,18 +9,20 @@
         android:id="@+id/memory_list_view_item_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/normal_horizontal_padding"
-        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:paddingTop="@dimen/small_vertical_padding"
+        android:paddingBottom="@dimen/small_vertical_padding"
         android:text="Memory"
         android:textColor="@android:color/black"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/memory_list_view_item_date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/normal_horizontal_padding"
-        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:paddingTop="@dimen/small_vertical_padding"
+        android:paddingBottom="@dimen/small_vertical_padding"
         android:text="23/5/2014"/>
 
     <LinearLayout
@@ -28,13 +30,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/normal_horizontal_padding"
-        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:paddingTop="@dimen/small_vertical_padding"
+        android:paddingBottom="@dimen/small_vertical_padding"
         android:clickable="true">
         <TextView
             android:id="@+id/memory_list_view_item_from_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="@dimen/small_vertical_padding"
             android:textSize="@dimen/text_size_small"
             android:text="America"/>
         <TextView
@@ -45,6 +48,7 @@
             android:id="@+id/memory_list_view_item_to_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/small_vertical_padding"
             android:textSize="@dimen/text_size_small"
             android:text="Bucharest"/>
     </LinearLayout>
@@ -53,8 +57,8 @@
         android:id="@+id/memory_list_view_item_cover_photo_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/normal_horizontal_padding"
-        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:paddingTop="@dimen/small_vertical_padding"
+        android:paddingBottom="@dimen/small_vertical_padding"
         android:maxHeight="200dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
