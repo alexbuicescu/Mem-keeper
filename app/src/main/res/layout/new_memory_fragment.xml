@@ -24,7 +24,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/upload_cover"/>
+                <requestFocus/>
             </RelativeLayout>
 
             <include

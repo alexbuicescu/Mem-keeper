@@ -113,6 +113,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         memoryItemName = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_name_text_view);
         memoryItemName.setText("Name of your journey:");
         memoryNameEditText = (EditText) memoryItem.findViewById(R.id.new_memory_fragment_name_edit_text);
+        memoryNameEditText.clearFocus();
         addNewButton = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_add_new_button);
         addNewButton.setVisibility(View.GONE);
 
