@@ -104,7 +104,6 @@ public class NewMemoryFragLayout extends BaseFragment {
 		view = inflater.inflate(R.layout.new_memory_fragment, container, false);
 		initAll();
         initTopBar();
-
 		return view;
 	}
 
@@ -138,6 +137,7 @@ public class NewMemoryFragLayout extends BaseFragment {
                     dbHelper.deleteMemory(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
                     hideKeyboard();
                     getActivity().finish();
+                    broadcastIntent(null);
                 }
             });
         }
@@ -146,6 +146,7 @@ public class NewMemoryFragLayout extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ((NewMemoryActivity)context).onBackPressed();
+                broadcastIntent(null);
                 hideKeyboard();
 //                listener.onTopBarBackClick();
             }
@@ -157,6 +158,7 @@ public class NewMemoryFragLayout extends BaseFragment {
                 if(saveMemory()) {
                     listener.onSaveClicked();
                     hideKeyboard();
+                    broadcastIntent(null);
                     getActivity().finish();
                 }
             }
@@ -578,5 +580,25 @@ public class NewMemoryFragLayout extends BaseFragment {
             }
         }
         return false;
+    }
+
+
+    // broadcast a custom intent.
+    public void broadcastIntent(View view)
+    {
+        Intent intent = new Intent();
+        intent.setAction("example.com.memkeeper");
+        getActivity().sendBroadcast(intent);
+
+//        Intent intent2 = new Intent();
+//        intent2.setAction("example.com.memkeeper");
+//        getActivity().sendBroadcast(intent2);
+    }
+
+    public void update()
+    {
+//        Intent intent = new Intent("com.yourcompany.testIntent");
+//        intent.putExtra("value","test");
+//        sendBroadcast(intent);
     }
 }

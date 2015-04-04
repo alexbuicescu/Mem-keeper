@@ -1,7 +1,10 @@
 package example.com.memkeeper.Activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +24,7 @@ import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.Layouts.FriendsFragLayout;
 import example.com.memkeeper.Layouts.MemoryLaneFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
+import example.com.memkeeper.MyReceiver;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
 import example.com.memkeeper.Utils.MemoriesUtils;
@@ -29,6 +33,9 @@ import example.com.memkeeper.Utils.PhotoUtils;
 
 public class MainActivity extends ActionBarActivity implements MemoryLaneFragLayout.OnMemoryLaneFragmentListener,
                 FriendsFragLayout.OnFriendsFragmentListener{
+
+//    MyReceiver myReceiver = null;
+    Boolean myReceiverIsRegistered = false;
 
     private SlidingMenu mainMenu;
     private TextView topBarTitleTextView;
@@ -54,6 +61,38 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
         initLayout();
         initSlidingMenu();
         initTopBar();
+//        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter("example.com.memkeeper.main");
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+//                String value =  intent.getExtras().getString("value");
+                layoutMemoryLane.refresh();
+            }
+        };
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Log.i("onrsume", "main");
+        layoutMemoryLane.refresh();
+//        if (!myReceiverIsRegistered) {
+//            registerReceiver(myReceiver, new IntentFilter("example.com.memkeeper"));
+//            myReceiverIsRegistered = true;
+//        }
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+//        if (myReceiverIsRegistered) {
+//            unregisterReceiver(myReceiver);
+//            myReceiverIsRegistered = false;
+//        }
     }
 
     private void initLayout()

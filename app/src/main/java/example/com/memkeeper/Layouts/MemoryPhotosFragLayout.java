@@ -103,6 +103,11 @@ public class MemoryPhotosFragLayout extends BaseFragment {
         });
     }
 
+    public void refresh()
+    {
+        memoryGridItemAdapter.notifyDataSetChanged();
+        memoryGridItemAdapter.notifyDataSetChanged();
+    }
 
     private void updateView()
     {

@@ -79,10 +79,16 @@ public class MemoryGridItemAdapter extends BaseAdapter {
 
 //        holder.thumbnailImageView.setImageBitmap(memory.getImages().get(position).getThumbnail());
 
-        Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
-                Long.parseLong(memory.getImagesPaths().get(position)), MediaStore.Images.Thumbnails.MINI_KIND, null);
-        holder.thumbnailImageView.setImageBitmap(bm);
+        try {
 
+            Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
+                    Long.parseLong(memory.getImagesPaths().get(position)), MediaStore.Images.Thumbnails.MINI_KIND, null);
+            holder.thumbnailImageView.setImageBitmap(bm);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         return convertView;
     }
 

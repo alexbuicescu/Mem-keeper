@@ -1,8 +1,11 @@
 package example.com.memkeeper.Adapters;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +102,14 @@ public class MemoriesListItemAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void refresh()
+    {
+        notifyDataSetChanged();
+        Memory memory = memoryList.get(memoryList.size() - 1);
+        memoryList.remove(memoryList.size() - 1);
+        memoryList.add(memory);
+    }
+
     public void setMemoriesList(List<Memory> memoryList)
     {
         this.memoryList = memoryList;
@@ -111,4 +122,5 @@ public class MemoriesListItemAdapter extends BaseAdapter {
         TextView memoryToTextView;
         ImageView memoryCoverImageView;
     }
+
 }

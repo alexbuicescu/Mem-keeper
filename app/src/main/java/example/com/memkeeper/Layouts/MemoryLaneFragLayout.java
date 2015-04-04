@@ -86,6 +86,20 @@ public class MemoryLaneFragLayout extends BaseFragment {
 //
 //    }
 
+    public void refresh()
+    {
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
+        memoriesListItemAdapter.setMemoriesList(dbHelper.getAllMemories());
+        memoriesListItemAdapter.notifyDataSetChanged();
+//        context.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                memoriesListItemAdapter.notifyDataSetChanged();
+//            }
+//        });
+    }
+
     private void updateView() {
         ViewGroup addNewMemoryView = (ViewGroup) view.findViewById(R.id.main_activity_new_memory_button);
         addNewMemoryView.setOnClickListener(new View.OnClickListener() {

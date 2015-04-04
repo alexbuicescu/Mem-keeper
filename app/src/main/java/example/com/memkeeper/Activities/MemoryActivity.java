@@ -1,9 +1,13 @@
 package example.com.memkeeper.Activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +30,16 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
 
         layout = (MemoryPhotosFragLayout) getSupportFragmentManager().findFragmentById(R.id.memory_fragment);
         onContentChanged();
+
+//        IntentFilter filter = new IntentFilter("example.com.memkeeper.memory");
+//        BroadcastReceiver receiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+////                String value =  intent.getExtras().getString("value");
+//                layout.refresh();
+//            }
+//        };
+//        registerReceiver(receiver, filter);
     }
 
     @Override
