@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import example.com.memkeeper.Activities.AddPhotosActivity;
+import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
@@ -46,6 +47,7 @@ public class NewMemoryFragLayout extends BaseFragment {
 	public interface OnNewMemoryFragmentListener {
 		public void onAddPhotosClicked();
         public void onChangeCoverClicked();
+        public void onSaveClicked();
 	}
 
     private Activity context;
@@ -87,6 +89,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         this.inflater = inflater;
 		view = inflater.inflate(R.layout.new_memory_fragment, container, false);
 		initAll();
+        initTopBar();
 
 		return view;
 	}
@@ -100,6 +103,30 @@ public class NewMemoryFragLayout extends BaseFragment {
         {
             e.printStackTrace();
         }
+    }
+
+    private void initTopBar()
+    {
+        ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.new_memory_fragment_top_bar);
+        RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_new_memory_back_container);
+        RelativeLayout doneButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_new_memory_done_container);
+
+        backButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+                hideKeyboard();
+//                listener.onTopBarBackClick();
+            }
+        });
+
+        doneButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onSaveClicked();
+                hideKeyboard();
+            }
+        });
     }
 
     private void updateView()

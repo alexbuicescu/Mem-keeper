@@ -137,7 +137,6 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     @Override
     public void onTopBarBackClick() {
         getSupportFragmentManager().popBackStack();
-        layoutAlbums.refresh();
 
         if(layoutAlbums != null)
         {
@@ -203,27 +202,25 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     public void onTopBarBackClickPhotos() {
 
 //        getSupportFragmentManager().popBackStack();
-        layoutAlbums.refresh();
+        if(layoutAlbums != null) {
+            layoutAlbums.refresh();
 
-        for(Photo photo : PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList())
-        {
-            photo.setSelected(false);
-        }
-        PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(0);
-        if(PhotoUtils.getSelectedPhotos() != null)
-        {
-            PhotoUtils.getSelectedPhotos().clear();
-        }
+            for (Photo photo : PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList()) {
+                photo.setSelected(false);
+            }
+            PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(0);
+            if (PhotoUtils.getSelectedPhotos() != null) {
+                PhotoUtils.getSelectedPhotos().clear();
+            }
 
-        if(selectCover)
-        {
-            if(lastCoverPhoto != null) {
-                lastCoverPhoto.setCover(false);
-                firstCoverPhoto.setCover(true);
-                lastCoverPhoto = firstCoverPhoto;
+            if (selectCover) {
+                if (lastCoverPhoto != null) {
+                    lastCoverPhoto.setCover(false);
+                    firstCoverPhoto.setCover(true);
+                    lastCoverPhoto = firstCoverPhoto;
+                }
             }
         }
-
 //        getSupportFragmentManager().popBackStack();
     }
 
@@ -257,6 +254,11 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
             lastCoverPhoto.setCover(true);
             firstCoverPhoto = lastCoverPhoto;
         }
+    }
+
+    @Override
+    public void onSaveClicked() {
+
     }
 
     private void backFromPhotos()
