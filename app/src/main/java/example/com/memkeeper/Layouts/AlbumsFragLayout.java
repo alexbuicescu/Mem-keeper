@@ -2,6 +2,7 @@ package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,8 @@ public class AlbumsFragLayout extends BaseFragment {
     {
         if(albumsGridItemAdapter != null)
         {
+            Log.i("update", "update");
+            albumsGridItemAdapter.setAlbums(PhotoUtils.getAlbums());
             albumsGridItemAdapter.notifyDataSetChanged();
         }
     }

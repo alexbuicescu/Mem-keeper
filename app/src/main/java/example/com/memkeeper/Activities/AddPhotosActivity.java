@@ -1,7 +1,10 @@
 package example.com.memkeeper.Activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -35,6 +38,17 @@ public class AddPhotosActivity extends ActionBarActivity implements
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, layoutAlbums).commit();
         onContentChanged();
+
+
+        IntentFilter filter = new IntentFilter("example.com.memkeeper");
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+//                String value =  intent.getExtras().getString("value");
+                layoutAlbums.refresh();
+            }
+        };
+        registerReceiver(receiver, filter);
     }
 
     @Override

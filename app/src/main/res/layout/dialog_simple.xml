@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dialog_simple_camera_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/sel_text_black_white"
+        android:paddingTop="@dimen/normal_horizontal_padding"
+        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:paddingLeft="@dimen/large_horizontal_padding"
+        android:paddingRight="@dimen/large_horizontal_padding"
+        android:background="@drawable/shape_topbar_btn_back"
+        android:text="Camera"/>
+
+    <TextView
+        android:id="@+id/dialog_simple_gallery_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_normal"
+        android:paddingTop="@dimen/normal_horizontal_padding"
+        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:paddingLeft="@dimen/large_horizontal_padding"
+        android:paddingRight="@dimen/large_horizontal_padding"
+        android:textColor="@color/sel_text_black_white"
+        android:text="Gallery"/>
+
+</LinearLayout>

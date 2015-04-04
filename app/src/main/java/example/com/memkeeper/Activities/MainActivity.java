@@ -62,15 +62,15 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
         initSlidingMenu();
         initTopBar();
 //        myReceiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter("example.com.memkeeper.main");
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-//                String value =  intent.getExtras().getString("value");
-                layoutMemoryLane.refresh();
-            }
-        };
-        registerReceiver(receiver, filter);
+//        IntentFilter filter = new IntentFilter("example.com.memkeeper.main");
+//        BroadcastReceiver receiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+////                String value =  intent.getExtras().getString("value");
+//                layoutMemoryLane.refresh();
+//            }
+//        };
+//        registerReceiver(receiver, filter);
     }
 
     @Override

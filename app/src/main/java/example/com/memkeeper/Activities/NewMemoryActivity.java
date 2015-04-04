@@ -1,7 +1,10 @@
 package example.com.memkeeper.Activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,6 +19,7 @@ import example.com.memkeeper.Layouts.PhotosFragLayout;
 import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
+import example.com.memkeeper.SimpleDialog;
 import example.com.memkeeper.Utils.PhotoUtils;
 
 
@@ -48,6 +52,16 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, layoutNewMemory).commit();
         onContentChanged();
+
+        IntentFilter filter = new IntentFilter("example.com.memkeeper");
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+//                String value =  intent.getExtras().getString("value");
+                layoutAlbums.refresh();
+            }
+        };
+        registerReceiver(receiver, filter);
     }
 
     @Override
@@ -82,7 +96,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 //                    layoutNewMemory.initCover(firstCoverPhoto);
 //                }
             }
-            getSupportFragmentManager().popBackStack();
+//            getSupportFragmentManager().popBackStack();
             super.onBackPressed();
         }
         else
@@ -213,6 +227,11 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
         }
     }
 
+    public void refresh()
+    {
+        layoutAlbums.refresh();
+    }
+
     @Override
     public void onTopBarBackClickPhotos() {
 
@@ -243,13 +262,20 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     @Override
     public void onAddPhotosClicked() {
 
-        selectCover = false;
-        layoutAlbums = new AlbumsFragLayout();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, layoutAlbums)
-                .addToBackStack("some name")
-                .commit();
-        isInAlbum = false;
+
+        final SimpleDialog.Builder showDialog = new SimpleDialog.Builder(this);
+        showDialog.setGalleryRunnable(new Runnable() {
+            @Override
+            public void run() {
+                selectCover = false;
+                layoutAlbums = new AlbumsFragLayout();
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, layoutAlbums)
+                        .addToBackStack("some name")
+                        .commit();
+                isInAlbum = false;
+            }
+        }).build().show();
 
 //        Intent myIntent = new Intent(NewMemoryActivity.this, AddPhotosActivity.class);
 //        this.startActivity(myIntent);
@@ -275,5 +301,17 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     @Override
     public void onSaveClicked() {
 
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            Log.i("success", "success");
+            PhotoUtils.queryPhotos(this);
+        }
     }
 }
