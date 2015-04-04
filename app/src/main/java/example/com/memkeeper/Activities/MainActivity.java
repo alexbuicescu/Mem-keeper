@@ -18,6 +18,7 @@ import example.com.memkeeper.Layouts.FriendsFragLayout;
 import example.com.memkeeper.Layouts.MemoryLaneFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.R;
+import example.com.memkeeper.Utils.FriendsUtils;
 import example.com.memkeeper.Utils.PhotoUtils;
 
 
@@ -72,6 +73,7 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 //        });
 
         PhotoUtils.queryPhotos(this);
+        FriendsUtils.fetchContacts(this);
     }
 
     private void initTopBar()
