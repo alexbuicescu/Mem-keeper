@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -79,7 +80,9 @@ public class PhotoFragLayout extends BaseFragment {
         ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.photo_fragment_top_bar);
         RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_memory_back_container);
         RelativeLayout doneButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_memory_done_container);
+        RelativeLayout shareButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_memory_share_container);
         doneButtonLayout.setVisibility(View.GONE);
+        shareButtonLayout.setVisibility(View.GONE);
         TextView topBarTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_memory_title_text_view);
         topBarTitleTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
 
