@@ -64,18 +64,11 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
             String current = ((Friend)iterator.next()).getName();
             if(current.toUpperCase().equals(last.toUpperCase()))
             {
-                Log.i("sorted", "removed " + last);
                 iterator.remove();
             }
             last = current;
         }
 
-        for (int i = 1; i < currentItems.size(); i++) {
-            if(currentItems.get(i-1).getName().toUpperCase().equals(currentItems.get(i).getName().toUpperCase()))
-            {
-
-            }
-        }
         for (int i = 0; i < currentItems.size(); i++) {
             if(indexer.get(currentItems.get(i).getName().toUpperCase().charAt(0) + "") == null)
             {
@@ -105,7 +98,7 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
             holder = (DividerViewHolder) convertView.getTag();
         }
 
-        holder.groupName.setText("Header: " + currentItems.get(i).getName().toUpperCase().charAt(0));
+        holder.groupName.setText(currentItems.get(i).getName().toUpperCase().charAt(0) + "");
 
         return convertView;
     }
@@ -189,6 +182,7 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
         {
             holder.photoImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
         }
+        Log.i("size", currentItems.size() + "");
 
         return convertView;
     }
