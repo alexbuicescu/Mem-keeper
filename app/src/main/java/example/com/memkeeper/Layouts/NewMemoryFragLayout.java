@@ -561,11 +561,20 @@ public class NewMemoryFragLayout extends BaseFragment {
         }
 
         List<String> photosIDs = new ArrayList<>();
+        List<String> latitude = new ArrayList<>();
+        List<String> longitude = new ArrayList<>();
         if(PhotoUtils.getSelectedPhotos() != null) {
             for (Photo photo : PhotoUtils.getSelectedPhotos()) {
                 photosIDs.add(String.valueOf(photo.getPhotoId()));
+                if(photo.getLatitude() != null && photo.getLongitude() != null)
+                {
+                    latitude.add(photo.getLatitude());
+                    longitude.add(photo.getLongitude());
+                }
             }
         }
+        memory.setLatitude(latitude);
+        memory.setLongitude(longitude);
 
         memory.setImagesPaths(photosIDs);
         List<String> friends = new ArrayList<>();

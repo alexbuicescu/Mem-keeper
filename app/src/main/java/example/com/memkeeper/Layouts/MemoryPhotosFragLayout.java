@@ -1,21 +1,29 @@
 package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.POJO.Memory;
+import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.MemoriesUtils;
+import example.com.memkeeper.Utils.PhotoUtils;
 
 /**
  * Created by Alexandru on 03-Apr-15.
@@ -73,6 +81,28 @@ public class MemoryPhotosFragLayout extends BaseFragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     listener.onPhotoClicked(position);
+                }
+            });
+
+            Button seeMap = (Button) view.findViewById(R.id.memory_fragment_see_map_button);
+            seeMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    float longitude = 0;
+                    float latitude = 0;
+                    for(Photo photo : PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList())
+                    {
+                        if(photo.getLongitude() != null)
+                        {
+                            longitude = Float.parseFloat(photo.getLongitude());
+                            latitude = Float.parseFloat(photo.getLatitude());
+                            Log.i("found", "longitude" + longitude + " " + latitude);
+//                            break;
+                        }
+                    }
+                    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    context.startActivity(intent);
                 }
             });
 

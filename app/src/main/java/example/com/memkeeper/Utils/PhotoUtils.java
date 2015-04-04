@@ -76,6 +76,8 @@ public class PhotoUtils {
                         MediaStore.Images.Media.DISPLAY_NAME,
                         MediaStore.Images.Media.PICASA_ID,
                         MediaStore.Images.Media.DATA,
+                        MediaStore.Images.Media.LATITUDE,
+                        MediaStore.Images.Media.LONGITUDE,
                         MediaStore.Images.Media.DATE_TAKEN
                 };
 
@@ -100,6 +102,8 @@ public class PhotoUtils {
                     String name;
                     String date;
                     String path;
+                    String longitude;
+                    String latitude;
 
                     int idColumn = cur.getColumnIndex(
                             MediaStore.Images.Media._ID);
@@ -119,6 +123,12 @@ public class PhotoUtils {
                     int dateColumn = cur.getColumnIndex(
                             MediaStore.Images.Media.DATE_TAKEN);
 
+                    int longitudeColumn = cur.getColumnIndex(
+                            MediaStore.Images.Media.LONGITUDE);
+
+                    int latitudeColumn = cur.getColumnIndex(
+                            MediaStore.Images.Media.LATITUDE);
+
                     do {
                         // Get the field values
                         int id = cur.getInt(idColumn);
@@ -126,6 +136,9 @@ public class PhotoUtils {
                         bucket = cur.getString(bucketColumn);
                         date = cur.getString(dateColumn);
                         path = cur.getString(dataColumn);
+                        longitude = cur.getString(longitudeColumn);
+                        latitude = cur.getString(latitudeColumn);
+//                        Log.i("location", latitude + " " + longitude);
 
                         if (!lastBucketName.equals("") && !bucket.equals(lastBucketName)) {
                             Album album = new Album();
@@ -146,6 +159,12 @@ public class PhotoUtils {
                             Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(activity.getContentResolver(),
                                     id, MediaStore.Images.Thumbnails.MINI_KIND, null);
                             photo.setThumbnail(bm);
+
+                            if(longitude != null && latitude != null)
+                            {
+                                photo.setLongitude(longitude);
+                                photo.setLatitude(latitude);
+                            }
                             photo.setPhotoId(id);
 
                             photos.add(photo);

@@ -58,7 +58,10 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
             @Override
             public void onReceive(Context context, Intent intent) {
 //                String value =  intent.getExtras().getString("value");
-                layoutAlbums.refresh();
+                if(layoutAlbums != null)
+                {
+                    layoutAlbums.refresh();
+                }
             }
         };
         registerReceiver(receiver, filter);
