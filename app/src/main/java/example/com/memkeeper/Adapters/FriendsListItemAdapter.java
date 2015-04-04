@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 import example.com.memkeeper.POJO.Friend;
@@ -46,14 +47,33 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
         Collections.sort(currentItems, new Comparator<Friend>() {
             @Override
             public int compare(Friend lhs, Friend rhs) {
-                if(lhs.getName().compareTo(rhs.getName()) > 0)
-                {
-                    return 1;
-                }
-                return 0;
+                return lhs.getName().toUpperCase().compareTo(rhs.getName().toUpperCase());
             }
         });
 
+        Iterator iterator = currentItems.iterator();
+        String last = "";
+        if(iterator.hasNext())
+        {
+            last = ((Friend)iterator.next()).getName();
+        }
+        while(iterator.hasNext())
+        {
+            String current = ((Friend)iterator.next()).getName();
+            if(current.toUpperCase().equals(last.toUpperCase()))
+            {
+                Log.i("sorted", "removed " + last);
+                iterator.remove();
+            }
+            last = current;
+        }
+
+        for (int i = 1; i < currentItems.size(); i++) {
+            if(currentItems.get(i-1).getName().toUpperCase().equals(currentItems.get(i).getName().toUpperCase()))
+            {
+
+            }
+        }
         for (int i = 0; i < currentItems.size(); i++) {
             if(indexer.get(currentItems.get(i).getName().toUpperCase().charAt(0) + "") == null)
             {
