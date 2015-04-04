@@ -1,18 +1,18 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
 import example.com.memkeeper.Activities.NewMemoryActivity;
-import example.com.memkeeper.POJO.Album;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 
@@ -73,6 +73,12 @@ public class PhotosGridItemAdapter extends BaseAdapter {
             holder.thumbnailImageView = (ImageView) convertView.findViewById(R.id.photos_grid_view_thumbnail_image_view);
             holder.checkboxImageView = (ImageView) convertView.findViewById(R.id.photos_grid_view_selected_image_view);
 
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_bottom_top);
+//            animation.setDuration(500);
+            animation.setStartOffset(position * 200);
+            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            convertView.startAnimation(animation);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -96,7 +102,14 @@ public class PhotosGridItemAdapter extends BaseAdapter {
         {
             if(photos.get(position).isSelected())
             {
-                holder.checkboxImageView.setVisibility(View.VISIBLE);
+//                if(holder.checkboxImageView.getVisibility() == View.GONE)
+                {
+                    holder.checkboxImageView.setVisibility(View.VISIBLE);
+//                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_small_big);
+////            animation.setDuration(500);
+//                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
+//                    holder.checkboxImageView.startAnimation(animation);
+                }
             }
             else
             {

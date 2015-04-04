@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -159,6 +162,12 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
 
             holder.titleTextView = (TextView) convertView.findViewById(R.id.friend_item_layout_name_text_view);
             holder.photoImageView = (RoundImageView) convertView.findViewById(R.id.friend_item_layout_photo_image_view);
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_right_left);
+//            animation.setDuration(500);
+            animation.setStartOffset(position * 200);
+            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            convertView.startAnimation(animation);
 
             convertView.setTag(holder);
         } else {

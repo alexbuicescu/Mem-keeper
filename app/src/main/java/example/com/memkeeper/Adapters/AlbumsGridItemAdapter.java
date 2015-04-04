@@ -1,19 +1,22 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import android.os.Handler;
 
 import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.POJO.Album;
-import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
 
 
@@ -75,6 +78,14 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
             holder.albumName = (TextView) convertView.findViewById(R.id.albums_grid_view_name_text_view);
             holder.selectedTextView = (TextView) convertView.findViewById(R.id.albums_grid_view_selected_text_view);
 
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_bottom_top);
+//            animation.setDuration(500);
+            animation.setStartOffset(position * 200);
+            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            convertView.startAnimation(animation);
+
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -103,6 +114,18 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
+    private final Handler animationsHandler = new Handler()
+    {
+
+        @Override
+        public void handleMessage(Message msg)
+        {
+            if (msg.what == 0 || msg.what == 1)
+            {
+            }
+        }
+    };
 
     public void setAlbums(List<Album> albums)
     {

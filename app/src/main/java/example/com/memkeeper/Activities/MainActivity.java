@@ -223,6 +223,7 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                             memory.setLocationOne("Somewhere");
                             memory.setLocationTwo("Anywhere");
                             memory.setImagesPaths(newPhotos);
+                            memory.setCoverImagePath(newPhotos.get(0));
                             DatabaseHelper dbHelper = new DatabaseHelper(activity);
                             dbHelper.insertMemory(memory);
                             MemoriesUtils.setMemoryList(dbHelper.getAllMemories());

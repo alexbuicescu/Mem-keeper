@@ -2,10 +2,13 @@ package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -79,6 +82,27 @@ public class AlbumsFragLayout extends BaseFragment {
 
             updateView();
             initTopBar();
+
+//            for(int i = 0; i < 3; i++) {
+//                Animation anim = AnimationUtils.loadAnimation(
+//                        context, android.R.anim.slide_out_right
+//                );
+//                anim.setDuration(500);
+////                albumsGridView.getChildAt(i).startAnimation(anim);
+//            }
+//            new Handler().postDelayed(new Runnable() {
+//
+//                public void run() {
+//
+//                    FavouritesManager.getInstance().remove(
+//                            FavouritesManager.getInstance().getTripManagerAtIndex(index)
+//                    );
+//                    populateList();
+//                    adapter.notifyDataSetChanged();
+//
+//                }
+//
+//            }, anim.getDuration());
         }
         catch (Exception e)
         {

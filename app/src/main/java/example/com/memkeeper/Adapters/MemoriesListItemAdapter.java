@@ -1,14 +1,14 @@
 package example.com.memkeeper.Adapters;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import example.com.memkeeper.Activities.MainActivity;
 import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
 
@@ -80,6 +79,17 @@ public class MemoriesListItemAdapter extends BaseAdapter {
             holder.memoryToTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_to_text_view);
             holder.memoryCoverImageView = (ImageView) convertView.findViewById(R.id.memory_list_view_item_cover_photo_image_view);
             holder.memoryMasterContainer = (LinearLayout) convertView.findViewById(R.id.memory_list_view_item_master_container);
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_bottom_top);
+
+//            TranslateAnimation animation = new TranslateAnimation(
+//                    Animation.RELATIVE_TO_SELF, 0.f,
+//                    Animation.RELATIVE_TO_SELF, 0.f,
+//                    Animation.RELATIVE_TO_SELF, 1.f,
+//                    Animation.RELATIVE_TO_SELF, 0.f);
+            animation.setDuration(500);
+            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            convertView.startAnimation(animation);
 
             convertView.setTag(holder);
         } else {
