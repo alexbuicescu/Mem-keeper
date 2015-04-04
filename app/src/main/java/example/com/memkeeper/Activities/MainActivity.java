@@ -2,6 +2,7 @@ package example.com.memkeeper.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,13 +14,22 @@ import android.widget.RelativeLayout;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import example.com.memkeeper.Layouts.FriendsFragLayout;
+import example.com.memkeeper.Layouts.MemoryLaneFragLayout;
+import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.PhotoUtils;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements MemoryLaneFragLayout.OnMemoryLaneFragmentListener,
+                FriendsFragLayout.OnFriendsFragmentListener{
 
     private SlidingMenu mainMenu;
+
+    private FriendsFragLayout layoutFriends;
+    private MemoryLaneFragLayout layoutMemoryLane;
+
+    Button lastSelectedViewInMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,12 @@ public class MainActivity extends ActionBarActivity {
 
         getSupportActionBar().hide();
 
+        layoutMemoryLane = new MemoryLaneFragLayout();//(NewMemoryFragLayout) getSupportFragmentManager().findFragmentById(R.id.new_memory_fragment);
+//        layoutAlbums = new AlbumsFragLayout(); //(AlbumsFragLayout) getSupportFragmentManager().findFragmentById(R.id.albums_fragment);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_fragment_container, layoutMemoryLane).commit();
+        onContentChanged();
+
         initLayout();
         initSlidingMenu();
         initTopBar();
@@ -35,25 +51,25 @@ public class MainActivity extends ActionBarActivity {
 
     private void initLayout()
     {
-        final Activity activity = this;
-
-        Button showGalleryButton = (Button) findViewById(R.id.main_activity_show_gallery_button);
-        showGalleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, MemoryActivity.class);
-                activity.startActivity(myIntent);
-            }
-        });
-
-        RelativeLayout addNewMemory = (RelativeLayout) findViewById(R.id.main_activity_new_memory_button);
-        addNewMemory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, NewMemoryActivity.class);
-                activity.startActivity(myIntent);
-            }
-        });
+//        final Activity activity = this;
+//
+//        Button showGalleryButton = (Button) findViewById(R.id.main_activity_show_gallery_button);
+//        showGalleryButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myIntent = new Intent(MainActivity.this, MemoryActivity.class);
+//                activity.startActivity(myIntent);
+//            }
+//        });
+//
+//        RelativeLayout addNewMemory = (RelativeLayout) findViewById(R.id.main_activity_new_memory_button);
+//        addNewMemory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myIntent = new Intent(MainActivity.this, NewMemoryActivity.class);
+//                activity.startActivity(myIntent);
+//            }
+//        });
 
         PhotoUtils.queryPhotos(this);
     }
@@ -84,8 +100,34 @@ public class MainActivity extends ActionBarActivity {
         mainMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         mainMenu.setMenu(R.layout.menu);
 
-//        initSlidingMenuButtons();
+        initSlidingMenuButtons();
     }
+
+    private void initSlidingMenuButtons() {
+
+        final Button menuFriends = (Button) mainMenu.findViewById(R.id.menu_see_your_friends_button);
+        menuFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(lastSelectedViewInMenu != null)
+                {
+                    lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.gray_light));
+                    lastSelectedViewInMenu.setTypeface(null, Typeface.NORMAL);
+                }
+                lastSelectedViewInMenu = menuFriends;
+                lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
+                lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
+
+                layoutFriends = new FriendsFragLayout();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment_container, layoutFriends)
+                        .commit();
+                mainMenu.toggle();
+            }
+        });
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,5 +142,21 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFriendClicked(int position) {
+
+    }
+
+    @Override
+    public void onMemoryClicked(int position) {
+
+    }
+
+    @Override
+    public void onAddNewMemoryClicked() {
+        Intent myIntent = new Intent(MainActivity.this, NewMemoryActivity.class);
+        this.startActivity(myIntent);
     }
 }
