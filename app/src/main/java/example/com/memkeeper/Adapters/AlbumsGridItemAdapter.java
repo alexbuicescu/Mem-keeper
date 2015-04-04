@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.POJO.Album;
 import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
@@ -83,16 +84,23 @@ public class AlbumsGridItemAdapter extends BaseAdapter {
         holder.thumbnailImageView.setImageBitmap(albums.get(position).getPhotosList().get(0).getThumbnail());
         holder.countTextView.setText(albums.get(position).getPhotosList().size() + "");
         holder.albumName.setText(albums.get(position).getName());
-        if(albums.get(position).getNrSelectedPhotos() > 0)
-        {
-            holder.selectedTextView.setVisibility(View.VISIBLE);
-            holder.selectedTextView.setText(albums.get(position).getNrSelectedPhotos() + "");
-        }
-        else
+
+        if(NewMemoryActivity.selectCover)
         {
             holder.selectedTextView.setVisibility(View.GONE);
         }
-
+        else
+        {
+            if(albums.get(position).getNrSelectedPhotos() > 0)
+            {
+                holder.selectedTextView.setVisibility(View.VISIBLE);
+                holder.selectedTextView.setText(albums.get(position).getNrSelectedPhotos() + "");
+            }
+            else
+            {
+                holder.selectedTextView.setVisibility(View.GONE);
+            }
+        }
         return convertView;
     }
 

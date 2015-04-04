@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.Adapters.PhotosGridItemAdapter;
+import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.PhotoUtils;
 
@@ -21,6 +24,8 @@ public class PhotosFragLayout extends BaseFragment {
 
 	public interface OnPhotosFragmentListener {
 		public void onPhotoClicked(int position);
+        public void onTopBarBackClickPhotos();
+        public void onTopBarDoneClickPhotos();
 	}
 
     private Activity context;
@@ -50,9 +55,52 @@ public class PhotosFragLayout extends BaseFragment {
 	{
 		view = inflater.inflate(R.layout.photos_fragment, container, false);
 		initAll();
+        initTopBar();
 
 		return view;
 	}
+
+    private void initTopBar()
+    {
+        ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.photos_fragment_top_bar);
+        TextView backButtonTextView = (TextView) topBarLayout.findViewById(R.id.topbar_gallery_back_text_view);
+        RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_gallery_back_container);
+        RelativeLayout doneButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_gallery_done_container);
+
+        backButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                for(Photo photo : PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList())
+//                {
+//                    photo.setSelected(false);
+//                }
+//                PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(0);
+//                if(PhotoUtils.getSelectedPhotos() != null)
+//                {
+//                    PhotoUtils.getSelectedPhotos().clear();
+//                }
+//
+//                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().getSupportFragmentManager().popBackStack();
+                listener.onTopBarBackClickPhotos();
+                photosGridItemAdapter.notifyDataSetChanged();
+            }
+        });
+
+        doneButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photosGridItemAdapter.notifyDataSetChanged();
+                listener.onTopBarDoneClickPhotos();
+            }
+        });
+
+        if(NewMemoryActivity.selectCover)
+        {
+            backButtonTextView.setText("Choose cover memory");
+        }
+    }
 
 	private void initAll()
 	{
@@ -63,8 +111,6 @@ public class PhotosFragLayout extends BaseFragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    boolean isSelected = PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).isSelected();
-                    PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).setSelected(!isSelected);
                     photosGridItemAdapter.notifyDataSetChanged();
 
                     listener.onPhotoClicked(position);

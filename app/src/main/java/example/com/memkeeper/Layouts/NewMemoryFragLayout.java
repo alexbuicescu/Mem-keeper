@@ -305,6 +305,14 @@ public class NewMemoryFragLayout extends BaseFragment {
 
     public void updatePhotos()
     {
+        if(PhotoUtils.getSelectedPhotos() == null)
+        {
+            newPhotoView1.setVisibility(View.VISIBLE);
+            newPhotoView2.setVisibility(View.INVISIBLE);
+            newPhotoView3.setVisibility(View.INVISIBLE);
+            image1ImageView.setImageDrawable(getResources().getDrawable(R.drawable.gallery_arrow_right));
+            return;
+        }
         if(PhotoUtils.getSelectedPhotos().size() > 0)
         {
             newPhotoView1.setVisibility(View.VISIBLE);

@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/topbar_new_memory_back_container"
+        android:id="@+id/topbar_gallery_back_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_topbar_btn_back"
@@ -12,7 +12,7 @@
         android:descendantFocusability="blocksDescendants">
 
         <ImageView
-            android:id="@+id/topbar_new_memory_back_image_view"
+            android:id="@+id/topbar_gallery_back_image_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/normal_horizontal_padding"
@@ -20,18 +20,19 @@
             android:src="@drawable/sel_topbar_btn_back"/>
 
         <TextView
+            android:id="@+id/topbar_gallery_back_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create a new memory"
+            android:text="Choose memories"
             android:layout_centerVertical="true"
             android:textSize="@dimen/text_size_small"
             android:textColor="@color/sel_text_black_white"
-            android:layout_toRightOf="@+id/topbar_new_memory_back_image_view"/>
+            android:layout_toRightOf="@+id/topbar_gallery_back_image_view"/>
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/topbar_new_memory_done_container"
+        android:id="@+id/topbar_gallery_done_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_topbar_btn_back"
@@ -41,7 +42,7 @@
         android:descendantFocusability="blocksDescendants">
 
         <ImageView
-            android:id="@+id/topbar_new_memory_done_image_view"
+            android:id="@+id/topbar_gallery_done_image_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/normal_horizontal_padding"
@@ -55,7 +56,7 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/text_size_small"
             android:textColor="@color/sel_text_black_white"
-            android:layout_toRightOf="@+id/topbar_new_memory_done_image_view"/>
+            android:layout_toRightOf="@+id/topbar_gallery_done_image_view"/>
 
     </RelativeLayout>
     <View

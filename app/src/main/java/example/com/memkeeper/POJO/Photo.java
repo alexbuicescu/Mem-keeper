@@ -14,6 +14,7 @@ public class Photo {
     private Bitmap bitmap;
     private Bitmap thumbnail;
     private boolean isSelected;
+    private boolean isCover;
 
     public String getName() {
         return name;
@@ -69,5 +70,13 @@ public class Photo {
 
     public void setPhotoId(int photoId) {
         this.photoId = photoId;
+    }
+
+    public boolean isCover() {
+        return isCover;
+    }
+
+    public void setCover(boolean isCover) {
+        this.isCover = isCover;
     }
 }

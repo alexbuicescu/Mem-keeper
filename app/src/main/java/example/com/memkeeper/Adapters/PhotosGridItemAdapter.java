@@ -1,6 +1,7 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.POJO.Album;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
@@ -77,13 +79,30 @@ public class PhotosGridItemAdapter extends BaseAdapter {
         }
 
         holder.thumbnailImageView.setImageBitmap(photos.get(position).getThumbnail());
-        if(photos.get(position).isSelected())
+
+        if(NewMemoryActivity.selectCover)
         {
-            holder.checkboxImageView.setVisibility(View.VISIBLE);
+            holder.checkboxImageView.setVisibility(View.GONE);
+            if(photos.get(position).isCover())
+            {
+                holder.checkboxImageView.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder.checkboxImageView.setVisibility(View.GONE);
+            }
         }
         else
         {
-            holder.checkboxImageView.setVisibility(View.GONE);
+            if(photos.get(position).isSelected())
+            {
+                holder.checkboxImageView.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                holder.checkboxImageView.setVisibility(View.GONE);
+            }
+
         }
 
         return convertView;

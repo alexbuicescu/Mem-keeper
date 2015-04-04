@@ -90,6 +90,21 @@ public class AddPhotosActivity extends ActionBarActivity implements
     }
 
     @Override
+    public void onTopBarBackClick() {
+
+    }
+
+    @Override
+    public void onTopBarDoneClick() {
+
+    }
+
+    @Override
+    public void onTopBarDoneClickPhotos() {
+
+    }
+
+    @Override
     public void onPhotoClicked(int position) {
         if(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getPhotosList().get(position).isSelected())
         {
@@ -100,5 +115,10 @@ public class AddPhotosActivity extends ActionBarActivity implements
             PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).setNrSelectedPhotos(PhotoUtils.getAlbums().get(PhotoUtils.getCurrentAlbum()).getNrSelectedPhotos() - 1);
         }
         layoutAlbums.refresh();
+    }
+
+    @Override
+    public void onTopBarBackClickPhotos() {
+
     }
 }

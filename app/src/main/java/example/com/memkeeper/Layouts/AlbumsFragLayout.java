@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.Adapters.AlbumsGridItemAdapter;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.R;
@@ -23,6 +25,8 @@ public class AlbumsFragLayout extends BaseFragment {
 
 	public interface OnAlbumsFragmentListener {
 		public void onAlbumClicked(int position);
+        public void onTopBarBackClick();
+        public void onTopBarDoneClick();
 	}
 
     private Activity context;
@@ -73,10 +77,40 @@ public class AlbumsFragLayout extends BaseFragment {
             });
 
             updateView();
+            initTopBar();
         }
         catch (Exception e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private void initTopBar()
+    {
+        ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.albums_fragment_top_bar);
+        TextView backButtonTextView = (TextView) topBarLayout.findViewById(R.id.topbar_gallery_back_text_view);
+        RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_gallery_back_container);
+        RelativeLayout doneButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_gallery_done_container);
+
+        backButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onTopBarDoneClick();
+//                listener.onTopBarBackClick();
+            }
+        });
+        doneButtonLayout.setVisibility(View.GONE);
+
+        doneButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onTopBarDoneClick();
+            }
+        });
+
+        if(NewMemoryActivity.selectCover)
+        {
+            backButtonTextView.setText("Choose cover memory");
         }
     }
 
