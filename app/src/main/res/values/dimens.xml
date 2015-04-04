@@ -11,4 +11,8 @@
     <dimen name="gallery_photo_horizontal_padding">3dp</dimen>
     <dimen name="text_size_normal">18dp</dimen>
     <dimen name="text_size_small">15dp</dimen>
+
+    <dimen name="slidingmenu_offset">100dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+
 </resources>

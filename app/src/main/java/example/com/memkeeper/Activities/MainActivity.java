@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.PhotoUtils;
@@ -16,12 +19,18 @@ import example.com.memkeeper.Utils.PhotoUtils;
 
 public class MainActivity extends ActionBarActivity {
 
+    private SlidingMenu mainMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         initLayout();
+        initSlidingMenu();
+        initTopBar();
     }
 
     private void initLayout()
@@ -49,11 +58,33 @@ public class MainActivity extends ActionBarActivity {
         PhotoUtils.queryPhotos(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    private void initTopBar()
+    {
+        ViewGroup topBarLayout = (ViewGroup) findViewById(R.id.activity_main_topbar_layout);
+        RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_main_back_container);
+
+        backButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainMenu.toggle();
+            }
+        });
+    }
+
+
+    private void initSlidingMenu()
+    {
+        mainMenu = new SlidingMenu(this);
+        mainMenu.setMode(SlidingMenu.LEFT);
+        mainMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        mainMenu.setShadowWidthRes(R.dimen.shadow_width);
+        mainMenu.setShadowDrawable(R.drawable.shadow);
+        mainMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        mainMenu.setFadeDegree(0.35f);
+        mainMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        mainMenu.setMenu(R.layout.menu);
+
+//        initSlidingMenuButtons();
     }
 
     @Override
