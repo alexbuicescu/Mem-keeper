@@ -9,9 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.Layouts.AlbumsFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.Layouts.PhotosFragLayout;
+import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.PhotoUtils;

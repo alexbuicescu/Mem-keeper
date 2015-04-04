@@ -84,26 +84,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             contentValues.put(COLUMN_MEMORY_PHOTOS_PATHS, photosPaths);
 
-            String longitude = "";
-            for(String location : memory.getLongitude())
-            {
-                longitude += location + "--";
+            if(memory.getLongitude() != null) {
+                String longitude = "";
+                for (String location : memory.getLongitude()) {
+                    longitude += location + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_LOCATION_LONGITUDE, longitude);
             }
-            contentValues.put(COLUMN_MEMORY_LOCATION_LONGITUDE, longitude);
 
-            String latitude = "";
-            for(String location : memory.getLatitude())
-            {
-                latitude += location + "--";
+            if(memory.getLatitude() != null) {
+                String latitude = "";
+                for (String location : memory.getLatitude()) {
+                    latitude += location + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_LOCATION_LATITUDE, latitude);
             }
-            contentValues.put(COLUMN_MEMORY_LOCATION_LATITUDE, latitude);
 
-            String friends = "";
-            for(String friend : memory.getFriends())
-            {
-                friends += friend + "--";
+            if(memory.getFriends() != null) {
+                String friends = "";
+                for (String friend : memory.getFriends()) {
+                    friends += friend + "--";
+                }
+                contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
             }
-            contentValues.put(COLUMN_MEMORY_FRIENDS, friends);
 
             contentValues.put(COLUMN_MEMORY_DATE, memory.getDate());
             contentValues.put(COLUMN_MEMORY_LOCATION_ONE, memory.getLocationOne());

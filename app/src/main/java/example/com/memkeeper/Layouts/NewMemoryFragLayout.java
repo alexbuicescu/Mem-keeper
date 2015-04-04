@@ -34,6 +34,8 @@ import java.util.TimeZone;
 import example.com.memkeeper.Activities.AddPhotosActivity;
 import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
+import example.com.memkeeper.Database.DatabaseHelper;
+import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.MemoriesUtils;
@@ -68,6 +70,14 @@ public class NewMemoryFragLayout extends BaseFragment {
     private RelativeLayout newPhotoView2;
     private RelativeLayout newPhotoView3;
     private List<String> imagesPaths = new ArrayList<>();
+
+    TextView memoryItemName;
+    TextView addNewButton;
+    EditText memoryFriendNameEditText;
+    EditText memoryNameEditText;
+    EditText memoryDateEditText;
+    EditText memoryFromEditText;
+    EditText memoryToEditText;
 
 	@Override
 	public void onAttach(Activity activity)
@@ -123,6 +133,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         doneButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveMemory();
                 listener.onSaveClicked();
                 hideKeyboard();
             }
@@ -132,13 +143,6 @@ public class NewMemoryFragLayout extends BaseFragment {
     private void updateView()
     {
         ViewGroup memoryItem;
-        TextView memoryItemName;
-        TextView addNewButton;
-        EditText memoryFriendNameEditText;
-        EditText memoryNameEditText;
-        EditText memoryDateEditText;
-        EditText memoryFromEditText;
-        EditText memoryToEditText;
 
         memoryItem = (ViewGroup) view.findViewById(R.id.new_memory_fragment_name_container);
         memoryItemName = (TextView) memoryItem.findViewById(R.id.new_memory_fragment_name_text_view);
@@ -232,6 +236,7 @@ public class NewMemoryFragLayout extends BaseFragment {
 
     public void initCover(Photo coverPhoto)
     {
+        this.coverPhoto = coverPhoto;
         if(coverPhoto == null)
         {
         }
@@ -402,6 +407,24 @@ public class NewMemoryFragLayout extends BaseFragment {
             String month1 = String.valueOf(selectedMonth + 1);
             String day1 = String.valueOf(selectedDay);
 
+            Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+
+            if(Integer.parseInt(year1) > cal.get(Calendar.YEAR))
+            {
+                memoryDatePicker.setText("Select a lower value!");
+                return;
+            }
+            if(Integer.parseInt(year1) == cal.get(Calendar.YEAR) && Integer.parseInt(month1) - 1 > cal.get(Calendar.MONTH) )
+            {
+                memoryDatePicker.setText("Select a lower value!");
+                return;
+            }
+            if(Integer.parseInt(year1) == cal.get(Calendar.YEAR) && Integer.parseInt(month1) - 1 == cal.get(Calendar.MONTH)
+                    && Integer.parseInt(day1) > cal.get(Calendar.DAY_OF_MONTH))
+            {
+                memoryDatePicker.setText("Select a lower value!");
+                return;
+            }
             memoryDatePicker.setText(day1 + "/" + month1 + "/" + year1);
         }
     };
@@ -412,5 +435,40 @@ public class NewMemoryFragLayout extends BaseFragment {
         InputMethodManager imm = (InputMethodManager)context.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(coverImageView.getWindowToken(), 0);
+    }
+
+    private void saveMemory()
+    {
+        DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+        Memory memory = new Memory();
+        memory.setDate(memoryDatePicker.getText().toString());
+        memory.setName(memoryNameEditText.getText().toString());
+        memory.setLocationOne(memoryFromEditText.getText().toString());
+        memory.setLocationTwo(memoryToEditText.getText().toString());
+        if(coverPhoto != null)
+        {
+            memory.setCoverImagePath(coverPhoto.getPhotoId() + "");
+        }
+        List<String> photosIDs = new ArrayList<>();
+        for(Photo photo : PhotoUtils.getSelectedPhotos())
+        {
+            photosIDs.add(String.valueOf(photo.getPhotoId()));
+        }
+        memory.setImagesPaths(photosIDs);
+        List<String> friends = new ArrayList<>();
+        for(EditText editText : friendsEditText)
+        {
+            friends.add(editText.getText().toString());
+        }
+        memory.setFriends(friends);
+
+        if(dbHelper.insertMemory(memory))
+        {
+            Log.i("memory", "inserted successfully");
+        }
+        else
+        {
+            Log.i("memory", "insertion failed");
+        }
     }
 }
