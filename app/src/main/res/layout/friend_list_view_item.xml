@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp" >
+    android:layout_height="60dp"
+    android:background="@drawable/shape_topbar_btn_back"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants">
 
     <example.com.memkeeper.Layouts.RoundImageView
         android:id="@+id/friend_item_layout_photo_image_view"
@@ -19,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/friend_item_layout_photo_image_view"
+        android:textColor="@color/sel_text_black_white"
         android:text="Numele"/>
 
 </RelativeLayout>
