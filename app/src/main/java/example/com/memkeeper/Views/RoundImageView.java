@@ -1,4 +1,4 @@
-package example.com.memkeeper.Layouts;
+package example.com.memkeeper.Views;
 
 import android.content.Context;
 import android.graphics.Bitmap;

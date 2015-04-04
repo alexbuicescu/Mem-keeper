@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import example.com.memkeeper.Layouts.RoundImageView;
+import example.com.memkeeper.Views.RoundImageView;
 import example.com.memkeeper.POJO.Friend;
 import example.com.memkeeper.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;

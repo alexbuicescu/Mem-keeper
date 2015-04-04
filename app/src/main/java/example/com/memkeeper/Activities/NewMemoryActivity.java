@@ -64,7 +64,13 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
                 }
             }
         };
-        registerReceiver(receiver, filter);
+        try{
+            registerReceiver(receiver, filter);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override

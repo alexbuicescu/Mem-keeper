@@ -6,7 +6,7 @@
     android:clickable="true"
     android:descendantFocusability="blocksDescendants">
 
-    <example.com.memkeeper.Layouts.RoundImageView
+    <example.com.memkeeper.Views.RoundImageView
         android:id="@+id/friend_item_layout_photo_image_view"
         android:layout_width="50dp"
         android:layout_height="50dp"

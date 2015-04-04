@@ -2,9 +2,12 @@ package example.com.memkeeper.Layouts;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -33,6 +36,8 @@ public class MemoryLaneFragLayout extends BaseFragment {
     private LayoutInflater inflater;
     private ListView memoriesListView;
     private MemoriesListItemAdapter memoriesListItemAdapter;
+    private long lastScrollY;
+    private long initialPositionAddNewButton;
 
 	@Override
 	public void onAttach(Activity activity)
@@ -103,7 +108,7 @@ public class MemoryLaneFragLayout extends BaseFragment {
     }
 
     private void updateView() {
-        ViewGroup addNewMemoryView = (ViewGroup) view.findViewById(R.id.main_activity_new_memory_button);
+        final ViewGroup addNewMemoryView = (ViewGroup) view.findViewById(R.id.main_activity_new_memory_button);
         addNewMemoryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +124,64 @@ public class MemoryLaneFragLayout extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listener.onMemoryClicked(position);
+            }
+        });
+
+
+        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                initialPositionAddNewButton = (long) addNewMemoryView.getY();
+                return true;
+            }
+        };
+        view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+
+        initialPositionAddNewButton = (long) addNewMemoryView.getY();
+        memoriesListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                View c = memoriesListView.getChildAt(0);
+                int scrolly = -c.getTop() + memoriesListView.getFirstVisiblePosition() * c.getHeight();
+//                if(scrolly  > lastScrollY)
+//                {
+                addNewMemoryView.setY((float) (addNewMemoryView.getY() + (scrolly - lastScrollY) / 6));
+                if(scrolly  > lastScrollY &&
+                        addNewMemoryView.getY() < initialPositionAddNewButton + addNewMemoryView.getHeight())
+                {
+//                    addNewMemoryView.setY(addNewMemoryView.getY() + (scrolly - lastScrollY) / 2);
+                }
+                else
+                if(scrolly  > lastScrollY &&
+                        addNewMemoryView.getY() > initialPositionAddNewButton + addNewMemoryView.getHeight())
+                {
+                    addNewMemoryView.setY(initialPositionAddNewButton + addNewMemoryView.getHeight());
+                }
+                else
+                if(scrolly  < lastScrollY &&
+                        addNewMemoryView.getY() > initialPositionAddNewButton)
+                {
+//                    addNewMemoryView.setY(addNewMemoryView.getY() + (scrolly - lastScrollY) / 2);
+                }
+                else
+                if(scrolly  < lastScrollY &&
+                        addNewMemoryView.getY() <= initialPositionAddNewButton)
+                {
+                    addNewMemoryView.setY(initialPositionAddNewButton);
+                }
+//                }
+//                else
+//                if(scrolly  < lastScrollY)
+//                {
+//                    addNewMemoryView.setY(addNewMemoryView.getY() - scrolly + lastScrollY);
+//                }
+                Log.i("scroll", scrolly + "");
+                lastScrollY = scrolly;
             }
         });
     }
