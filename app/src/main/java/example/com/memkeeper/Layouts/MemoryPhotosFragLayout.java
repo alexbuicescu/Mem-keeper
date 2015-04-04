@@ -79,42 +79,6 @@ public class MemoryPhotosFragLayout extends BaseFragment {
         try {
             memoryPhotosGridView = (GridView) view.findViewById(R.id.activity_memory_photos_grid_view);
 
-            noPhotosTextView = (TextView) view.findViewById(R.id.activity_memory_no_photos_text_view);
-            TextView nrCommentsTextView = (TextView) view.findViewById(R.id.memory_list_view_item_comments_nr_text_view);
-            if(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getComments() != null)
-            {
-                nrCommentsTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getComments().size() + "");
-            }
-            else
-            {
-                nrCommentsTextView.setText("0");
-            }
-            TextView nrFriendsTextView = (TextView) view.findViewById(R.id.memory_list_view_item_friends_nr_text_view);
-            if(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getFriends() != null)
-            {
-                nrFriendsTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getFriends().size() + "");
-            }
-            else
-            {
-                nrFriendsTextView.setText("0");
-            }
-            LinearLayout commentsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_comments_container);
-            commentsLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent myIntent = new Intent(context, CommentsActivity.class);
-                    context.startActivity(myIntent);
-                }
-            });
-            LinearLayout friendsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_friends_container);
-            friendsLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent myIntent = new Intent(context, FriendsActivity.class);
-                    context.startActivity(myIntent);
-                }
-            });
-
             memoryPhotosGridView.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -162,6 +126,43 @@ public class MemoryPhotosFragLayout extends BaseFragment {
         memoryFromTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getLocationOne());
         TextView memoryToTextView = (TextView) view.findViewById(R.id.memory_list_view_item_to_text_view);
         memoryToTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getLocationTwo());
+
+        noPhotosTextView = (TextView) view.findViewById(R.id.activity_memory_no_photos_text_view);
+        TextView nrCommentsTextView = (TextView) view.findViewById(R.id.memory_list_view_item_comments_nr_text_view);
+        if(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getComments() != null)
+        {
+            nrCommentsTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getComments().size() + "");
+        }
+        else
+        {
+            nrCommentsTextView.setText("0");
+        }
+        TextView nrFriendsTextView = (TextView) view.findViewById(R.id.memory_list_view_item_friends_nr_text_view);
+        if(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getFriends() != null)
+        {
+            nrFriendsTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getFriends().size() + "");
+        }
+        else
+        {
+            nrFriendsTextView.setText("0");
+        }
+        LinearLayout commentsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_comments_container);
+        commentsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context, CommentsActivity.class);
+                context.startActivity(myIntent);
+            }
+        });
+        LinearLayout friendsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_friends_container);
+        friendsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context, FriendsActivity.class);
+                context.startActivity(myIntent);
+            }
+        });
+
     }
 
     private void initTopBar()
@@ -199,6 +200,7 @@ public class MemoryPhotosFragLayout extends BaseFragment {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         memoryGridItemAdapter.setMemory(dbHelper.getMemory(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId()));
         memoryGridItemAdapter.notifyDataSetChanged();
+        updateData();
     }
 
     private void updateView()

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.widget.LoginButton;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.Layouts.FriendsFragLayout;
@@ -198,9 +200,13 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                             }
                             else
                             {
-                                if(newPhotos.size() > 3)
+                                Random random = new Random();
+                                if(newPhotos.size() > 2 + random.nextInt(3))
                                 {
-                                    break;
+                                    if(random.nextInt(3) == 0)
+                                    {
+                                        break;
+                                    }
                                 }
                                 newPhotos.clear();
                             }
@@ -224,8 +230,13 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                                 @Override
                                 public void run() {
                                     layoutMemoryLane.refresh();
+                                    Toast.makeText(activity, "We found a memory", Toast.LENGTH_LONG).show();
                                 }
                             });
+                        }
+                        else
+                        {
+                            Toast.makeText(activity, "Sry, we haven't found a memory, but don't be sad, you can try again :)", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
