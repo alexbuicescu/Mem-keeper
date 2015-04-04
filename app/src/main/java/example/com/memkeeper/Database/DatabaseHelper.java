@@ -197,6 +197,144 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return memories;
     }
 
+    public ArrayList<Memory> getAllMemoriesYear(String year) {
+        if (!mydb.isOpen()) {
+            initDB();
+        }
+
+        ArrayList<Memory> memories = new ArrayList<>();
+        try {
+            Cursor cursor = mydb.query(TABLE_NAME,
+                    null, null, null, null, null, null);
+            Integer columnIdIndex = cursor.getColumnIndex(COLUMN_ID);
+            Integer columnNameIndex = cursor.getColumnIndex(COLUMN_MEMORY_NAME);
+            Integer columnCoverPhoto = cursor.getColumnIndex(COLUMN_MEMORY_COVER_PHOTO);
+            Integer columnLocationOne = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_ONE);
+            Integer columnLocationTwo = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_TWO);
+            Integer columnFriends = cursor.getColumnIndex(COLUMN_MEMORY_FRIENDS);
+            Integer columnDate = cursor.getColumnIndex(COLUMN_MEMORY_DATE);
+            Integer columnComments = cursor.getColumnIndex(COLUMN_MEMORY_COMMENTS);
+//            Integer columnPhotosPaths = cursor.getColumnIndex(COLUMN_MEMORY_PHOTOS_PATHS);
+//            Integer columnLatitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LATITUDE);
+//            Integer columnLongitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LONGITUDE);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(columnIdIndex);
+                    String name = cursor.getString(columnNameIndex);
+                    String coverPhoto = cursor.getString(columnCoverPhoto);
+                    String locationOne = cursor.getString(columnLocationOne);
+                    String locationTwo = cursor.getString(columnLocationTwo);
+                    String friends = cursor.getString(columnFriends);
+                    String date = cursor.getString(columnDate);
+                    String comments = cursor.getString(columnComments);
+                    if(!date.substring(0, date.indexOf("/")).equals(year))
+                    {
+                        continue;
+                    }
+//                    String photosPaths = cursor.getString(columnPhotosPaths);
+//                    String latitude = cursor.getString(columnLatitude);
+//                    String longitude = cursor.getString(columnLongitude);
+
+                    Memory memory = new Memory();
+                    memory.setId(id);
+                    memory.setName(name);
+                    memory.setCoverImagePath(coverPhoto);
+                    memory.setLocationOne(locationOne);
+                    memory.setLocationTwo(locationTwo);
+                    memory.setDate(date);
+                    if(friends != null)
+                    {
+                        memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    }
+                    if(comments != null)
+                    {
+                        memory.setComments(new ArrayList<>(Arrays.asList(comments.split("--"))));
+                    }
+//                    memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
+//                    memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
+//                    memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
+
+                    memories.add(memory);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mydb.close();
+        }
+
+        return memories;
+    }
+
+    public ArrayList<Memory> getAllMemoriesFriend(String friend) {
+        if (!mydb.isOpen()) {
+            initDB();
+        }
+
+        ArrayList<Memory> memories = new ArrayList<>();
+        try {
+            Cursor cursor = mydb.query(TABLE_NAME,
+                    null, null, null, null, null, null);
+            Integer columnIdIndex = cursor.getColumnIndex(COLUMN_ID);
+            Integer columnNameIndex = cursor.getColumnIndex(COLUMN_MEMORY_NAME);
+            Integer columnCoverPhoto = cursor.getColumnIndex(COLUMN_MEMORY_COVER_PHOTO);
+            Integer columnLocationOne = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_ONE);
+            Integer columnLocationTwo = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_TWO);
+            Integer columnFriends = cursor.getColumnIndex(COLUMN_MEMORY_FRIENDS);
+            Integer columnDate = cursor.getColumnIndex(COLUMN_MEMORY_DATE);
+            Integer columnComments = cursor.getColumnIndex(COLUMN_MEMORY_COMMENTS);
+//            Integer columnPhotosPaths = cursor.getColumnIndex(COLUMN_MEMORY_PHOTOS_PATHS);
+//            Integer columnLatitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LATITUDE);
+//            Integer columnLongitude = cursor.getColumnIndex(COLUMN_MEMORY_LOCATION_LONGITUDE);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(columnIdIndex);
+                    String name = cursor.getString(columnNameIndex);
+                    String coverPhoto = cursor.getString(columnCoverPhoto);
+                    String locationOne = cursor.getString(columnLocationOne);
+                    String locationTwo = cursor.getString(columnLocationTwo);
+                    String friends = cursor.getString(columnFriends);
+                    String date = cursor.getString(columnDate);
+                    String comments = cursor.getString(columnComments);
+                    if(friends != null && !friends.contains(friend))
+                    {
+                        continue;
+                    }
+//                    String photosPaths = cursor.getString(columnPhotosPaths);
+//                    String latitude = cursor.getString(columnLatitude);
+//                    String longitude = cursor.getString(columnLongitude);
+
+                    Memory memory = new Memory();
+                    memory.setId(id);
+                    memory.setName(name);
+                    memory.setCoverImagePath(coverPhoto);
+                    memory.setLocationOne(locationOne);
+                    memory.setLocationTwo(locationTwo);
+                    memory.setDate(date);
+                    if(friends != null)
+                    {
+                        memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    }
+                    if(comments != null)
+                    {
+                        memory.setComments(new ArrayList<>(Arrays.asList(comments.split("--"))));
+                    }
+//                    memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
+//                    memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
+//                    memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
+
+                    memories.add(memory);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mydb.close();
+        }
+
+        return memories;
+    }
+
     public Memory getMemory(int memoryId) {
         if (!mydb.isOpen()) {
             initDB();

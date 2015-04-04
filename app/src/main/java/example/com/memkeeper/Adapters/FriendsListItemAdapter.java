@@ -182,6 +182,12 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
             holder.photoImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
         }
         Log.i("size", currentItems.size() + "");
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("a dat", "click");
+//            }
+//        });
 
         return convertView;
     }

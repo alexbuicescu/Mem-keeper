@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import example.com.memkeeper.Activities.MainActivity;
 import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
 
@@ -77,6 +79,7 @@ public class MemoriesListItemAdapter extends BaseAdapter {
             holder.memoryFromTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_from_text_view);
             holder.memoryToTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_to_text_view);
             holder.memoryCoverImageView = (ImageView) convertView.findViewById(R.id.memory_list_view_item_cover_photo_image_view);
+            holder.memoryMasterContainer = (LinearLayout) convertView.findViewById(R.id.memory_list_view_item_master_container);
 
             convertView.setTag(holder);
         } else {
@@ -98,6 +101,7 @@ public class MemoriesListItemAdapter extends BaseAdapter {
             e.printStackTrace();
             holder.memoryCoverImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.upload_cover));
         }
+
 
         return convertView;
     }
@@ -121,6 +125,7 @@ public class MemoriesListItemAdapter extends BaseAdapter {
         TextView memoryFromTextView;
         TextView memoryToTextView;
         ImageView memoryCoverImageView;
+        LinearLayout memoryMasterContainer;
     }
 
 }

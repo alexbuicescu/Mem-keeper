@@ -25,6 +25,7 @@ import com.facebook.widget.LoginButton;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import example.com.memkeeper.Database.DatabaseHelper;
@@ -32,6 +33,7 @@ import example.com.memkeeper.Layouts.FriendsFragLayout;
 import example.com.memkeeper.Layouts.MemoryLaneFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.MyReceiver;
+import example.com.memkeeper.POJO.Friend;
 import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
@@ -53,6 +55,9 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 
     private SlidingMenu mainMenu;
     private TextView topBarTitleTextView;
+
+    public static String currentYear = "";
+    public static String friend = "";
 
     private FriendsFragLayout layoutFriends;
     private MemoryLaneFragLayout layoutMemoryLane;
@@ -190,6 +195,8 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                 lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
                 topBarTitleTextView.setText("Your friends");
 
+                currentYear = "";
+                friend = "";
                 layoutFriends = new FriendsFragLayout();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_fragment_container, layoutFriends)
@@ -212,6 +219,8 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 //                lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
 //                lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
 
+                currentYear = "";
+                friend = "";
                 layoutMemoryLane = new MemoryLaneFragLayout();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_fragment_container, layoutMemoryLane)
@@ -220,7 +229,7 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
             }
         });
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        final DatabaseHelper dbHelper = new DatabaseHelper(this);
         MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
 
         List<String> years = new ArrayList<>();
@@ -234,16 +243,51 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 
         Log.i("year", years.size() + "");
         LinearLayout slidingWindowYearContainer = (LinearLayout) findViewById(R.id.menu_years_container);
-        for(String year : years)
+        for(final String year : years)
         {
-            Button yearButton = new Button(this);
+            final Button yearButton = new Button(this);
             yearButton.setText(year);
             yearButton.setTextColor(getResources().getColor(R.color.darker_gray));
             yearButton.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             yearButton.setBackgroundColor(Color.TRANSPARENT);
             slidingWindowYearContainer.addView(yearButton);
-//            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) yearButton.getLayoutParams();
             yearButton.setPadding((int) ViewUtils.calculateDpToPixel(30, this), 0, 0, 0);
+            yearButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    currentYear = year;
+                    friend = "";
+
+//                    MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
+//                    Iterator iterator = MemoriesUtils.getMemoryList().iterator();
+//                    while(iterator.hasNext())
+//                    {
+//                        Memory memory = (Memory) iterator.next();
+//                        if(!memory.getDate().substring(0, memory.getDate().indexOf("/")).equals(currentYear))
+//                        {
+//                            iterator.remove();
+//                        }
+//                    }
+
+                    if(lastSelectedViewInMenu != null)
+                    {
+                        lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.darker_gray));
+                        lastSelectedViewInMenu.setTypeface(null, Typeface.NORMAL);
+                    }
+                    lastSelectedViewInMenu = yearButton;
+                    topBarTitleTextView.setText("Memory Lane");
+                    lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
+                    lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
+//                lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
+//                lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
+
+                    layoutMemoryLane = new MemoryLaneFragLayout();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.main_fragment_container, layoutMemoryLane)
+                            .commit();
+                    mainMenu.toggle();
+                }
+            });
             Log.i("year", year);
         }
     }
@@ -266,7 +310,25 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 
     @Override
     public void onFriendClicked(int position) {
+        friend = FriendsUtils.getFriendList().get(position).getName();
 
+        Log.i("clicked", "friend");
+
+        if(lastSelectedViewInMenu != null)
+        {
+            lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.darker_gray));
+            lastSelectedViewInMenu.setTypeface(null, Typeface.NORMAL);
+        }
+        lastSelectedViewInMenu = null;
+        topBarTitleTextView.setText("Memory Lane");
+//                lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
+//                lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
+
+        layoutMemoryLane = new MemoryLaneFragLayout();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, layoutMemoryLane)
+                .commit();
+//        mainMenu.toggle();
     }
 
     @Override

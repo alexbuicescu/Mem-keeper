@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -104,5 +106,14 @@ public class FriendsFragLayout extends BaseFragment {
         friendsListItemAdapter = new FriendsListItemAdapter(getActivity(), FriendsUtils.getFriendList());
         friendsListView.setAdapter(friendsListItemAdapter);
         friendsListView.setFastScrollEnabled(true);
+        friendsListView.setClickable(true);
+        Log.i("goT", "here3");
+        friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("goT", "here");
+                listener.onFriendClicked(position);
+            }
+        });
     }
 }
