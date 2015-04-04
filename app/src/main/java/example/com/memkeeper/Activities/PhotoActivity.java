@@ -1,30 +1,27 @@
 package example.com.memkeeper.Activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import example.com.memkeeper.Layouts.MemoryPhotosFragLayout;
+import example.com.memkeeper.Layouts.PhotoFragLayout;
 import example.com.memkeeper.R;
 
 
-public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFragLayout.OnMemoryPhotoFragmentListener {
+public class PhotoActivity extends ActionBarActivity implements PhotoFragLayout.OnPhotoFragmentListener{
 
-    MemoryPhotosFragLayout layout;
+    PhotoFragLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.holder_frag_memory);
+        setContentView(R.layout.holder_frag_photo);
 
         getSupportActionBar().hide();
 
-        layout = (MemoryPhotosFragLayout) getSupportFragmentManager().findFragmentById(R.id.memory_fragment);
+        layout = (PhotoFragLayout) getSupportFragmentManager().findFragmentById(R.id.photo_fragment);
         onContentChanged();
     }
 
@@ -50,10 +47,8 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onPhotoClicked(int position) {
-
-        Intent myIntent = new Intent(MemoryActivity.this, PhotoActivity.class);
-        this.startActivity(myIntent);
-    }
+//    @Override
+//    public void onPhotoClicked(int position) {
+//
+//    }
 }
