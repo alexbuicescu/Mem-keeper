@@ -5,30 +5,41 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.widget.LoginButton;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.Layouts.FriendsFragLayout;
 import example.com.memkeeper.Layouts.MemoryLaneFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.MyReceiver;
+import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
 import example.com.memkeeper.Utils.MemoriesUtils;
 import example.com.memkeeper.Utils.PhotoUtils;
+import example.com.memkeeper.Utils.ViewUtils;
+import example.com.memkeeper.facebook.FacebookLogInButton;
+import example.com.memkeeper.facebook.FacebookShareButton;
 
 
 public class MainActivity extends ActionBarActivity implements MemoryLaneFragLayout.OnMemoryLaneFragmentListener,
@@ -36,6 +47,9 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 
 //    MyReceiver myReceiver = null;
     Boolean myReceiverIsRegistered = false;
+
+    public static FacebookLogInButton fbLoginButton;
+    public static FacebookShareButton fbShareButton;
 
     private SlidingMenu mainMenu;
     private TextView topBarTitleTextView;
@@ -61,6 +75,10 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
         initLayout();
         initSlidingMenu();
         initTopBar();
+        fbShareButton = new FacebookShareButton(this, savedInstanceState);
+        fbLoginButton = new FacebookLogInButton(this, fbShareButton, new LoginButton(this));
+        fbLoginButton.onCreate(savedInstanceState);
+        fbShareButton.onCreate(savedInstanceState);
 //        myReceiver = new MyReceiver();
 //        IntentFilter filter = new IntentFilter("example.com.memkeeper.main");
 //        BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -79,6 +97,8 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
         super.onResume();
         Log.i("onrsume", "main");
         layoutMemoryLane.refresh();
+        fbLoginButton.onResume();
+        fbShareButton.onResume();
 //        if (!myReceiverIsRegistered) {
 //            registerReceiver(myReceiver, new IntentFilter("example.com.memkeeper"));
 //            myReceiverIsRegistered = true;
@@ -89,6 +109,8 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
     protected void onPause()
     {
         super.onPause();
+        fbLoginButton.onPause();
+        fbShareButton.onPause();
 //        if (myReceiverIsRegistered) {
 //            unregisterReceiver(myReceiver);
 //            myReceiverIsRegistered = false;
@@ -197,6 +219,33 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                 mainMenu.toggle();
             }
         });
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
+
+        List<String> years = new ArrayList<>();
+        for(Memory memory : MemoriesUtils.getMemoryList())
+        {
+            if(!years.contains(memory.getDate().substring(0, memory.getDate().indexOf('/'))))
+            {
+                years.add(memory.getDate().substring(0, memory.getDate().indexOf('/')));
+            }
+        }
+
+        Log.i("year", years.size() + "");
+        LinearLayout slidingWindowYearContainer = (LinearLayout) findViewById(R.id.menu_years_container);
+        for(String year : years)
+        {
+            Button yearButton = new Button(this);
+            yearButton.setText(year);
+            yearButton.setTextColor(getResources().getColor(R.color.darker_gray));
+            yearButton.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            yearButton.setBackgroundColor(Color.TRANSPARENT);
+            slidingWindowYearContainer.addView(yearButton);
+//            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) yearButton.getLayoutParams();
+            yearButton.setPadding((int) ViewUtils.calculateDpToPixel(30, this), 0, 0, 0);
+            Log.i("year", year);
+        }
     }
 
 
@@ -235,5 +284,21 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
         Intent myIntent = new Intent(MainActivity.this, NewMemoryActivity.class);
         myIntent.putExtra("edit", 0);
         this.startActivity(myIntent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        fbLoginButton.onActivityResult(requestCode, resultCode, data);
+        fbShareButton.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        fbLoginButton.onSaveInstanceState(outState);
+        fbShareButton.onSaveInstanceState(outState);
     }
 }

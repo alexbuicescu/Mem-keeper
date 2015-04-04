@@ -34,9 +34,6 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
 
     MemoryPhotosFragLayout layout;
 
-    public static FacebookLogInButton fbLoginButton;
-    public static FacebookShareButton fbShareButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +44,6 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         layout = (MemoryPhotosFragLayout) getSupportFragmentManager().findFragmentById(R.id.memory_fragment);
         onContentChanged();
 
-        fbShareButton = new FacebookShareButton(this, savedInstanceState);
-        fbLoginButton = new FacebookLogInButton(this, fbShareButton, new LoginButton(this));
-        fbLoginButton.onCreate(savedInstanceState);
-        fbShareButton.onCreate(savedInstanceState);
 //        IntentFilter filter = new IntentFilter("example.com.memkeeper.memory");
 //        BroadcastReceiver receiver = new BroadcastReceiver() {
 //            @Override
@@ -68,16 +61,12 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         super.onResume();
         Log.i("onrsume", "memory");
         layout.refresh();
-        fbLoginButton.onResume();
-        fbShareButton.onResume();
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        fbLoginButton.onPause();
-        fbShareButton.onPause();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,23 +107,8 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
 
     @Override
     public void onShareClicked() {
-        fbShareButton.setSharingDescription(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
-        fbLoginButton.performClick();
+        MainActivity.fbShareButton.setSharingDescription(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
+        MainActivity.fbLoginButton.performClick();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        fbLoginButton.onActivityResult(requestCode, resultCode, data);
-        fbShareButton.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-        fbLoginButton.onSaveInstanceState(outState);
-        fbShareButton.onSaveInstanceState(outState);
-    }
 }
