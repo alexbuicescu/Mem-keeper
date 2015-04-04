@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import example.com.memkeeper.Layouts.RoundImageView;
 import example.com.memkeeper.POJO.Friend;
 import example.com.memkeeper.R;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -164,6 +166,7 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
             holder = new ViewHolder();
 
             holder.titleTextView = (TextView) convertView.findViewById(R.id.friend_item_layout_name_text_view);
+            holder.photoImageView = (RoundImageView) convertView.findViewById(R.id.friend_item_layout_photo_image_view);
 
             convertView.setTag(holder);
         } else {
@@ -172,12 +175,27 @@ public class FriendsListItemAdapter extends BaseAdapter implements StickyListHea
         }
 
         holder.titleTextView.setText(currentItems.get(position).getName());
+        if(currentItems.get(position).getUri() != null)
+        {
+            try{
+                holder.photoImageView.setImageURI(currentItems.get(position).getUri());
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            holder.photoImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+        }
 
         return convertView;
     }
 
     private class ViewHolder {
         TextView titleTextView;
+        RoundImageView photoImageView;
     }
 
     public static class DividerViewHolder {
