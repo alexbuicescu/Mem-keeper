@@ -56,4 +56,12 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         Intent myIntent = new Intent(MemoryActivity.this, PhotoActivity.class);
         this.startActivity(myIntent);
     }
+
+    @Override
+    public void onEditClicked() {
+
+        Intent myIntent = new Intent(MemoryActivity.this, NewMemoryActivity.class);
+        myIntent.putExtra("edit", 1);
+        this.startActivity(myIntent);
+    }
 }

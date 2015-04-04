@@ -30,6 +30,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     public static boolean selectCover;
     Photo lastCoverPhoto;
     Photo firstCoverPhoto;
+    public static int isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 
         getSupportActionBar().hide();
 
+        Bundle bundle = getIntent().getExtras();
+        isEdit = bundle.getInt("edit");
         isInAlbum = false;
         selectCover = false;
         layoutNewMemory = new NewMemoryFragLayout();//(NewMemoryFragLayout) getSupportFragmentManager().findFragmentById(R.id.new_memory_fragment);

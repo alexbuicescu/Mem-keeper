@@ -194,6 +194,7 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
     @Override
     public void onAddNewMemoryClicked() {
         Intent myIntent = new Intent(MainActivity.this, NewMemoryActivity.class);
+        myIntent.putExtra("edit", 0);
         this.startActivity(myIntent);
     }
 }

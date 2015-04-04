@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -35,6 +37,8 @@ import example.com.memkeeper.Activities.AddPhotosActivity;
 import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.Database.DatabaseHelper;
+import example.com.memkeeper.POJO.Album;
+import example.com.memkeeper.POJO.Friend;
 import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.POJO.Photo;
 import example.com.memkeeper.R;
@@ -120,6 +124,12 @@ public class NewMemoryFragLayout extends BaseFragment {
         ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.new_memory_fragment_top_bar);
         RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_new_memory_back_container);
         RelativeLayout doneButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_new_memory_done_container);
+
+        if(NewMemoryActivity.isEdit == 1)
+        {
+            TextView backButtonTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_new_memory_title_text_view);
+            backButtonTitleTextView.setText("Edit");
+        }
 
         backButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,6 +242,11 @@ public class NewMemoryFragLayout extends BaseFragment {
             }
         });
         coverImageView.requestFocus();
+
+        if(NewMemoryActivity.isEdit == 1)
+        {
+            fillForEdit(finalMemoryItem, friendsContainer);
+        }
     }
 
     public void initCover(Photo coverPhoto)
@@ -252,6 +267,66 @@ public class NewMemoryFragLayout extends BaseFragment {
 //            rlImgAvatarHolderParams.setMargins(0, -display.getWidth() / 4, 0, 0);
 //            coverImageView.setLayoutParams(rlImgAvatarHolderParams);
         }
+    }
+
+    private void fillForEdit(final ViewGroup finalMemoryItem, final LinearLayout friendsContainer)
+    {
+        Memory memory = MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory());
+        memoryNameEditText.setText(memory.getName());
+        memoryDatePicker.setText(memory.getDate());
+        memoryFromEditText.setText(memory.getLocationOne());
+        memoryToEditText.setText(memory.getLocationTwo());
+        Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
+                Long.parseLong(memory.getCoverImagePath()), MediaStore.Images.Thumbnails.MINI_KIND, null);
+        coverImageView.setImageBitmap(bm);
+        for(String friend : memory.getFriends())
+        {
+
+            final RelativeLayout newFriendView = (RelativeLayout) inflater.inflate(R.layout.friends_edit_text_layout, finalMemoryItem, false);
+            final EditText friendsNameEditText = (EditText) newFriendView.findViewById(R.id.new_memory_fragment_name_edit_text);
+            ImageButton friendsRemoveButton = (ImageButton) newFriendView.findViewById(R.id.new_memory_fragment_remove_button);
+            friendsRemoveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    friendsEditText.remove(friendsNameEditText);
+                    friendsContainer.removeView(newFriendView);
+                    if(!friendsEditText.isEmpty())
+                    {
+                        friendsEditText.get(friendsEditText.size() - 1).requestFocus();
+                    }
+                }
+            });
+            friendsNameEditText.setText(friend);
+            friendsEditText.add(friendsNameEditText);
+
+            friendsContainer.addView(newFriendView);
+        }
+
+        if(PhotoUtils.getSelectedPhotos() != null) {
+            for (Photo photo : PhotoUtils.getSelectedPhotos()) {
+                photo.setSelected(false);
+            }
+            PhotoUtils.getSelectedPhotos().clear();
+        }
+        for (Album album : PhotoUtils.getAlbums()) {
+            album.setNrSelectedPhotos(0);
+        }
+
+        for(String id : memory.getImagesPaths()) {
+            for (Album album : PhotoUtils.getAlbums()) {
+                for (Photo photo : album.getPhotosList()) {
+                    if (photo.getPhotoId() == Integer.parseInt(id))
+                    {
+                        album.setNrSelectedPhotos(album.getNrSelectedPhotos() + 1);
+                        photo.setSelected(true);
+                        PhotoUtils.addSelectedPhotos(photo);
+                        break;
+                    }
+                }
+            }
+        }
+
+        updatePhotos();
     }
 
     private void initFriends(final ViewGroup finalMemoryItem, final LinearLayout friendsContainer)

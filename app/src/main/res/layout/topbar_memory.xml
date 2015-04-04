@@ -41,29 +41,30 @@
     <RelativeLayout
         android:id="@+id/topbar_memory_done_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/shape_topbar_btn_back"
         android:layout_alignParentRight="true"
         android:paddingRight="@dimen/normal_horizontal_padding"
         android:clickable="true"
         android:descendantFocusability="blocksDescendants">
 
-        <ImageView
-            android:id="@+id/topbar_memory_done_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/normal_horizontal_padding"
-            android:paddingRight="@dimen/normal_horizontal_padding"
-            android:src="@drawable/sel_topbar_btn_done"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/topbar_memory_done_image_view"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:paddingLeft="@dimen/normal_horizontal_padding"-->
+            <!--android:paddingRight="@dimen/normal_horizontal_padding"-->
+            <!--android:src="@drawable/sel_topbar_btn_done"/>-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="Edit"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
             android:layout_centerVertical="true"
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/sel_text_black_white"
-            android:layout_toRightOf="@+id/topbar_memory_done_image_view"/>
+            android:textColor="@color/sel_text_black_white"/>
 
     </RelativeLayout>
     <View

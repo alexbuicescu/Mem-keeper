@@ -22,6 +22,7 @@ public class MemoryPhotosFragLayout extends BaseFragment {
 
 	public interface OnMemoryPhotoFragmentListener {
 		public void onPhotoClicked(int position);
+		public void onEditClicked();
 	}
 
     private Activity context;
@@ -84,6 +85,7 @@ public class MemoryPhotosFragLayout extends BaseFragment {
     {
         ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.memory_fragment_topbar);
         RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_memory_back_container);
+        RelativeLayout editButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_memory_done_container);
         TextView topBarTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_memory_title_text_view);
         topBarTitleTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
 
@@ -91,6 +93,12 @@ public class MemoryPhotosFragLayout extends BaseFragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+            }
+        });
+        editButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onEditClicked();
             }
         });
     }
