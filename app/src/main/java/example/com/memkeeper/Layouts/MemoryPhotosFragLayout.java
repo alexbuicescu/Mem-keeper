@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import example.com.memkeeper.Activities.CommentsActivity;
+import example.com.memkeeper.Activities.FriendsActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.POJO.Memory;
@@ -88,11 +89,28 @@ public class MemoryPhotosFragLayout extends BaseFragment {
             {
                 nrCommentsTextView.setText("0");
             }
+            TextView nrFriendsTextView = (TextView) view.findViewById(R.id.memory_list_view_item_friends_nr_text_view);
+            if(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getFriends() != null)
+            {
+                nrFriendsTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getFriends().size() + "");
+            }
+            else
+            {
+                nrFriendsTextView.setText("0");
+            }
             LinearLayout commentsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_comments_container);
             commentsLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent myIntent = new Intent(context, CommentsActivity.class);
+                    context.startActivity(myIntent);
+                }
+            });
+            LinearLayout friendsLayout = (LinearLayout) view.findViewById(R.id.memory_list_view_item_friends_container);
+            friendsLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(context, FriendsActivity.class);
                     context.startActivity(myIntent);
                 }
             });

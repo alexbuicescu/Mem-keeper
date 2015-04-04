@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/memory_friends_fragment_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        layout="@layout/topbar_new_memory"/>
+
+    <TextView
+        android:id="@+id/memory_friends_fragment_no_friends_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="No friends yet :)"
+        android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/memory_friends_fragment_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/memory_friends_fragment_topbar"/>
+
+</RelativeLayout>

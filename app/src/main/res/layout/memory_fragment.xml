@@ -72,29 +72,60 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/memory_list_view_item_comments_container"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/small_horizontal_padding"
-            android:paddingRight="@dimen/small_horizontal_padding"
-            android:paddingBottom="@dimen/small_horizontal_padding"
-            android:paddingTop="@dimen/small_horizontal_padding"
-            android:background="@drawable/shape_topbar_btn_back"
-            android:clickable="true"
-            android:descendantFocusability="blocksDescendants">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/sel_btn_comments"/>
-            <TextView
-                android:id="@+id/memory_list_view_item_comments_nr_text_view"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/memory_list_view_item_comments_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/small_horizontal_padding"
-                android:layout_gravity="center"
-                android:textColor="@color/sel_text_black_white"
-                android:text="12"/>
+                android:paddingRight="@dimen/small_horizontal_padding"
+                android:paddingBottom="@dimen/small_horizontal_padding"
+                android:paddingTop="@dimen/small_horizontal_padding"
+                android:background="@drawable/shape_topbar_btn_back"
+                android:clickable="true"
+                android:descendantFocusability="blocksDescendants">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/sel_btn_comments"/>
+                <TextView
+                    android:id="@+id/memory_list_view_item_comments_nr_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/small_horizontal_padding"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sel_text_black_white"
+                    android:text="12"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/memory_list_view_item_friends_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/small_horizontal_padding"
+                android:paddingRight="@dimen/small_horizontal_padding"
+                android:paddingBottom="@dimen/small_horizontal_padding"
+                android:paddingTop="@dimen/small_horizontal_padding"
+                android:background="@drawable/shape_topbar_btn_back"
+                android:clickable="true"
+                android:descendantFocusability="blocksDescendants">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/sel_btn_friends"/>
+                <TextView
+                    android:id="@+id/memory_list_view_item_friends_nr_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/small_horizontal_padding"
+                    android:layout_gravity="center"
+                    android:textColor="@color/sel_text_black_white"
+                    android:text="12"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
