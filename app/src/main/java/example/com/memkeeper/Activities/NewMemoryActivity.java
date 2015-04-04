@@ -217,9 +217,11 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 
         if(selectCover)
         {
-            lastCoverPhoto.setCover(false);
-            firstCoverPhoto.setCover(true);
-            lastCoverPhoto = firstCoverPhoto;
+            if(lastCoverPhoto != null) {
+                lastCoverPhoto.setCover(false);
+                firstCoverPhoto.setCover(true);
+                lastCoverPhoto = firstCoverPhoto;
+            }
         }
 
 //        getSupportFragmentManager().popBackStack();

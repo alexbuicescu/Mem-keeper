@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +12,20 @@
         android:layout_height="?attr/actionBarSize"
         layout="@layout/topbar_new_memory" />
 
-    <ScrollView
+
+
+    <com.nirhart.parallaxscroll.views.ParallaxScrollView
+        android:id="@+id/sv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/new_memory_fragment_top_bar">
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        app:parallax_factor="2">
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/new_memory_fragment_top_bar">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,8 +40,9 @@
                 <ImageView
                     android:id="@+id/new_memory_fragment_cover_image_view"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/upload_cover"/>
                 <requestFocus/>
             </RelativeLayout>
@@ -71,5 +83,6 @@
                 android:layout_height="wrap_content"
                 layout="@layout/new_memory_item_layout" />
         </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    <!--</ScrollView>-->
+    </com.nirhart.parallaxscroll.views.ParallaxScrollView>
+</LinearLayout>

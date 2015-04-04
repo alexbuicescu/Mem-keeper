@@ -5,6 +5,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="20dp"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <TextView

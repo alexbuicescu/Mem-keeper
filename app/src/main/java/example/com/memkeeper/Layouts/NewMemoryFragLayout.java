@@ -6,9 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -207,6 +211,14 @@ public class NewMemoryFragLayout extends BaseFragment {
         else
         {
             coverImageView.setImageBitmap(coverPhoto.getThumbnail());
+//            RelativeLayout.LayoutParams rlImgAvatarHolderParams = (RelativeLayout.LayoutParams) coverImageView.getLayoutParams();
+//            ParallaxScrollView scrollView = (ParallaxScrollView) view.findViewById(R.id.sv_content);
+//            scrollView.setExternalParallaxedView(coverImageView);
+//            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//            Display display = wm.getDefaultDisplay();
+//            Log.i("size", -display.getWidth() / 4 + "");
+//            rlImgAvatarHolderParams.setMargins(0, -display.getWidth() / 4, 0, 0);
+//            coverImageView.setLayoutParams(rlImgAvatarHolderParams);
         }
     }
 
