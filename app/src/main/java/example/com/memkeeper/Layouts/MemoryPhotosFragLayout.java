@@ -83,11 +83,12 @@ public class MemoryPhotosFragLayout extends BaseFragment {
         if (memoryGridItemAdapter == null)
         {
             memoryGridItemAdapter = new MemoryGridItemAdapter(context,
-                    MemoriesUtils.getCurrentMemory());
+                    MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()));
             memoryPhotosGridView.setAdapter(memoryGridItemAdapter);
         } else
         {
-            memoryGridItemAdapter.setMemory(MemoriesUtils.getCurrentMemory());
+            memoryGridItemAdapter.setMemory(
+                    MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()));
         }
 
         if(memoryPhotosGridView != null) {

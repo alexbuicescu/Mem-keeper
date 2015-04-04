@@ -12,7 +12,7 @@ public class Memory {
     private Bitmap coverImage;
     private String coverImagePath;
     private int id;
-    private List<Bitmap> images;
+    private List<Photo> images;
     private List<String> imagesPaths;
     private List<String> longitude;
     private List<String> latitude;
@@ -45,11 +45,11 @@ public class Memory {
         this.id = id;
     }
 
-    public List<Bitmap> getImages() {
+    public List<Photo> getImages() {
         return images;
     }
 
-    public void setImages(List<Bitmap> images) {
+    public void setImages(List<Photo> images) {
         this.images = images;
     }
 

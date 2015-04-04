@@ -10,7 +10,7 @@ import example.com.memkeeper.POJO.Memory;
  */
 public class MemoriesUtils {
     private static List<Memory> memoryList;
-    private static Memory currentMemory;
+    private static int currentMemory;
 
     public static List<Memory> getMemoryList() {
         if(memoryList == null)
@@ -24,11 +24,11 @@ public class MemoriesUtils {
         MemoriesUtils.memoryList = memoryList;
     }
 
-    public static Memory getCurrentMemory() {
+    public static int getCurrentMemory() {
         return currentMemory;
     }
 
-    public static void setCurrentMemory(Memory currentMemory) {
+    public static void setCurrentMemory(int currentMemory) {
         MemoriesUtils.currentMemory = currentMemory;
     }
 }

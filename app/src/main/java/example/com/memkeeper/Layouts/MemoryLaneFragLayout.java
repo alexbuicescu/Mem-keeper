@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -98,5 +99,11 @@ public class MemoryLaneFragLayout extends BaseFragment {
         memoriesListView = (ListView) view.findViewById(R.id.main_activity_memories_list_view);
         memoriesListItemAdapter = new MemoriesListItemAdapter(getActivity(), MemoriesUtils.getMemoryList());
         memoriesListView.setAdapter(memoriesListItemAdapter);
+        memoriesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.onMemoryClicked(position);
+            }
+        });
     }
 }

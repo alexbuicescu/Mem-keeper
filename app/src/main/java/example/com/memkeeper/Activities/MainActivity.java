@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,11 +17,13 @@ import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.Layouts.FriendsFragLayout;
 import example.com.memkeeper.Layouts.MemoryLaneFragLayout;
 import example.com.memkeeper.Layouts.NewMemoryFragLayout;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
+import example.com.memkeeper.Utils.MemoriesUtils;
 import example.com.memkeeper.Utils.PhotoUtils;
 
 
@@ -180,7 +183,12 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
 
     @Override
     public void onMemoryClicked(int position) {
-
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        MemoriesUtils.setCurrentMemory(position);
+//        Log.i("memory4", MemoriesUtils.getMemoryList().get(position).getImagesPaths().size() + "");
+        MemoriesUtils.getMemoryList().set(position, dbHelper.getMemory(MemoriesUtils.getMemoryList().get(position).getId()));
+        Intent myIntent = new Intent(MainActivity.this, MemoryActivity.class);
+        this.startActivity(myIntent);
     }
 
     @Override

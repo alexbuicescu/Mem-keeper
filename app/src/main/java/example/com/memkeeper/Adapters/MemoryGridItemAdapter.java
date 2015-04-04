@@ -1,6 +1,9 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,16 +44,16 @@ public class MemoryGridItemAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(memory != null && memory.getImages() != null)
+        if(memory != null && memory.getImagesPaths() != null)
         {
-            return memory.getImages().size();
+            return memory.getImagesPaths().size();
         }
         return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return memory.getImages().get(i);
+        return memory.getImagesPaths().get(i);
     }
 
     @Override
@@ -74,7 +77,11 @@ public class MemoryGridItemAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.thumbnailImageView.setImageBitmap(memory.getImages().get(position));
+//        holder.thumbnailImageView.setImageBitmap(memory.getImages().get(position).getThumbnail());
+
+        Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
+                Long.parseLong(memory.getImagesPaths().get(position)), MediaStore.Images.Thumbnails.MINI_KIND, null);
+        holder.thumbnailImageView.setImageBitmap(bm);
 
         return convertView;
     }

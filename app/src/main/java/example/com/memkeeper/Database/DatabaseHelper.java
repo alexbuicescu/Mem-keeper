@@ -186,6 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             Cursor cursor = mydb.query(TABLE_NAME,
                     new String[]{
+                            COLUMN_ID,
                             COLUMN_MEMORY_NAME,
                             COLUMN_MEMORY_LOCATION_LATITUDE,
                             COLUMN_MEMORY_LOCATION_LONGITUDE,
@@ -232,10 +233,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     memory.setLocationOne(locationOne);
                     memory.setLocationTwo(locationTwo);
                     memory.setDate(date);
-                    memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
-                    memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
-                    memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
-                    memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    if(photosPaths != null)
+                    {
+                        memory.setImagesPaths(new ArrayList<>(Arrays.asList(photosPaths.split("--"))));
+                    }
+                    if(latitude != null)
+                    {
+                        memory.setLatitude(new ArrayList<>(Arrays.asList(latitude.split("--"))));
+                    }
+                    if(longitude != null)
+                    {
+                        memory.setLongitude(new ArrayList<>(Arrays.asList(longitude.split("--"))));
+                    }
+                    if(friends != null)
+                    {
+                        memory.setFriends(new ArrayList<>(Arrays.asList(friends.split("--"))));
+                    }
 
                     return memory;
                 } while (cursor.moveToNext());
