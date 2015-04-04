@@ -1,10 +1,13 @@
 package example.com.memkeeper.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -66,7 +69,11 @@ public class MemoriesListItemAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
 
-            holder.memoryNameTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_title);
+            holder.memoryNameTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_title_text_view);
+            holder.memoryDateTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_date_text_view);
+            holder.memoryFromTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_from_text_view);
+            holder.memoryToTextView = (TextView) convertView.findViewById(R.id.memory_list_view_item_to_text_view);
+            holder.memoryCoverImageView = (ImageView) convertView.findViewById(R.id.memory_list_view_item_cover_photo_image_view);
 
             convertView.setTag(holder);
         } else {
@@ -74,6 +81,13 @@ public class MemoriesListItemAdapter extends BaseAdapter {
         }
 
         holder.memoryNameTextView.setText(memoryList.get(position).getName());
+        holder.memoryDateTextView.setText(memoryList.get(position).getDate());
+        holder.memoryFromTextView.setText(memoryList.get(position).getLocationOne());
+        holder.memoryToTextView.setText(memoryList.get(position).getLocationTwo());
+
+        Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
+                Long.parseLong(memoryList.get(position).getCoverImagePath()), MediaStore.Images.Thumbnails.MINI_KIND, null);
+        holder.memoryCoverImageView.setImageBitmap(bm);
 
         return convertView;
     }
@@ -85,5 +99,9 @@ public class MemoriesListItemAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView memoryNameTextView;
+        TextView memoryDateTextView;
+        TextView memoryFromTextView;
+        TextView memoryToTextView;
+        ImageView memoryCoverImageView;
     }
 }

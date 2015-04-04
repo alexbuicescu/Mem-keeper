@@ -9,8 +9,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import example.com.memkeeper.Adapters.FriendsListItemAdapter;
+import example.com.memkeeper.Adapters.MemoriesListItemAdapter;
+import example.com.memkeeper.Database.DatabaseHelper;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.FriendsUtils;
+import example.com.memkeeper.Utils.MemoriesUtils;
 
 /**
  * Created by Alexandru on 03-Apr-15.
@@ -27,8 +30,8 @@ public class MemoryLaneFragLayout extends BaseFragment {
 	private OnMemoryLaneFragmentListener listener;
 	private View view;
     private LayoutInflater inflater;
-//    private ListView friendsListView;
-//    private FriendsListItemAdapter friendsListItemAdapter;
+    private ListView memoriesListView;
+    private MemoriesListItemAdapter memoriesListItemAdapter;
 
 	@Override
 	public void onAttach(Activity activity)
@@ -90,8 +93,10 @@ public class MemoryLaneFragLayout extends BaseFragment {
                 listener.onAddNewMemoryClicked();
             }
         });
-//        friendsListView = (ListView) view.findViewById(R.id.friends_fragment_list_view);
-//        friendsListItemAdapter = new FriendsListItemAdapter(getActivity(), FriendsUtils.getFriendList());
-//        friendsListView.setAdapter(friendsListItemAdapter);
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        MemoriesUtils.setMemoryList(dbHelper.getAllMemories());
+        memoriesListView = (ListView) view.findViewById(R.id.main_activity_memories_list_view);
+        memoriesListItemAdapter = new MemoriesListItemAdapter(getActivity(), MemoriesUtils.getMemoryList());
+        memoriesListView.setAdapter(memoriesListItemAdapter);
     }
 }

@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/memory_list_view_item_title"
+        android:id="@+id/memory_list_view_item_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/normal_horizontal_padding"
+        android:paddingBottom="@dimen/normal_horizontal_padding"
         android:text="Memory"
         android:textColor="@android:color/black"
         android:textSize="20sp"/>
-</RelativeLayout>
+
+    <TextView
+        android:id="@+id/memory_list_view_item_date_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/normal_horizontal_padding"
+        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:text="23/5/2014"/>
+
+    <LinearLayout
+        android:id="@+id/memory_list_view_item_location_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/normal_horizontal_padding"
+        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:clickable="true">
+        <TextView
+            android:id="@+id/memory_list_view_item_from_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_small"
+            android:text="America"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"/>
+        <TextView
+            android:id="@+id/memory_list_view_item_to_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_small"
+            android:text="Bucharest"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/memory_list_view_item_cover_photo_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/normal_horizontal_padding"
+        android:paddingBottom="@dimen/normal_horizontal_padding"
+        android:maxHeight="200dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher"/>
+</LinearLayout>
