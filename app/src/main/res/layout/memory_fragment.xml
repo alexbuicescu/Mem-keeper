@@ -3,10 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/memory_fragment_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        layout="@layout/topbar_memory"/>
+
     <GridView
         android:id="@+id/activity_memory_photos_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/memory_fragment_topbar"
         android:horizontalSpacing="@dimen/gallery_photo_horizontal_padding"
         android:verticalSpacing="@dimen/gallery_photo_vertical_padding"
         android:listSelector="@android:color/transparent"

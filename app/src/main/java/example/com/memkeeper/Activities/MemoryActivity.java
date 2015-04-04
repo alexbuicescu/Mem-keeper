@@ -22,6 +22,8 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.holder_frag_memory);
 
+        getSupportActionBar().hide();
+
         layout = (MemoryPhotosFragLayout) getSupportFragmentManager().findFragmentById(R.id.memory_fragment);
         onContentChanged();
     }

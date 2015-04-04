@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
@@ -52,6 +53,7 @@ public class MemoryPhotosFragLayout extends BaseFragment {
 	{
 		view = inflater.inflate(R.layout.memory_fragment, container, false);
 		initAll();
+        initTopBar();
 
 		return view;
 	}
@@ -77,6 +79,22 @@ public class MemoryPhotosFragLayout extends BaseFragment {
             e.printStackTrace();
         }
     }
+
+    private void initTopBar()
+    {
+        ViewGroup topBarLayout = (ViewGroup) view.findViewById(R.id.memory_fragment_topbar);
+        RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_memory_back_container);
+        TextView topBarTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_memory_title_text_view);
+        topBarTitleTextView.setText(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
+
+        backButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+    }
+
 
     private void updateView()
     {
