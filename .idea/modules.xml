@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mem-keeper.iml" filepath="$PROJECT_DIR$/Mem-keeper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/slidingmenu_lib/slidingmenu_lib.iml" filepath="$PROJECT_DIR$/slidingmenu_lib/slidingmenu_lib.iml" />
     </modules>
   </component>

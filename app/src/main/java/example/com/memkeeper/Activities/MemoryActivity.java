@@ -5,22 +5,37 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Layout;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.facebook.widget.LoginButton;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import example.com.memkeeper.Layouts.MemoryPhotosFragLayout;
 import example.com.memkeeper.R;
+import example.com.memkeeper.Utils.MemoriesUtils;
+import example.com.memkeeper.facebook.FacebookLogInButton;
+import example.com.memkeeper.facebook.FacebookShareButton;
 
 
 public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFragLayout.OnMemoryPhotoFragmentListener {
 
     MemoryPhotosFragLayout layout;
+
+    public static FacebookLogInButton fbLoginButton;
+    public static FacebookShareButton fbShareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +47,10 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         layout = (MemoryPhotosFragLayout) getSupportFragmentManager().findFragmentById(R.id.memory_fragment);
         onContentChanged();
 
+        fbShareButton = new FacebookShareButton(this, savedInstanceState);
+        fbLoginButton = new FacebookLogInButton(this, fbShareButton, new LoginButton(this));
+        fbLoginButton.onCreate(savedInstanceState);
+        fbShareButton.onCreate(savedInstanceState);
 //        IntentFilter filter = new IntentFilter("example.com.memkeeper.memory");
 //        BroadcastReceiver receiver = new BroadcastReceiver() {
 //            @Override
@@ -49,12 +68,16 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         super.onResume();
         Log.i("onrsume", "memory");
         layout.refresh();
+        fbLoginButton.onResume();
+        fbShareButton.onResume();
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
+        fbLoginButton.onPause();
+        fbShareButton.onPause();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,5 +114,27 @@ public class MemoryActivity extends ActionBarActivity implements MemoryPhotosFra
         Intent myIntent = new Intent(MemoryActivity.this, NewMemoryActivity.class);
         myIntent.putExtra("edit", 1);
         this.startActivity(myIntent);
+    }
+
+    @Override
+    public void onShareClicked() {
+        fbShareButton.setSharingDescription(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getName());
+        fbLoginButton.performClick();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        fbLoginButton.onActivityResult(requestCode, resultCode, data);
+        fbShareButton.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        fbLoginButton.onSaveInstanceState(outState);
+        fbShareButton.onSaveInstanceState(outState);
     }
 }

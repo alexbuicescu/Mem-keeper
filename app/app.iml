@@ -88,7 +88,9 @@
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="stickylistheaders-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="bolts-android-1.1.2" level="project" />
     <orderEntry type="module" module-name="slidingmenu_lib" exported="" />
+    <orderEntry type="module" module-name="facebook" exported="" />
   </component>
 </module>
 

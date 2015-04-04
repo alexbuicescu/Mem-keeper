@@ -39,6 +39,25 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/topbar_memory_share_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_topbar_btn_back"
+        android:clickable="true"
+        android:layout_toLeftOf="@+id/topbar_memory_done_container"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:src="@drawable/sel_topbar_btn_share"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/topbar_memory_done_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
