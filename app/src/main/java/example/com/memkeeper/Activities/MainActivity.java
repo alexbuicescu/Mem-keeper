@@ -2,6 +2,7 @@ package example.com.memkeeper.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -26,6 +28,7 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                 FriendsFragLayout.OnFriendsFragmentListener{
 
     private SlidingMenu mainMenu;
+    private TextView topBarTitleTextView;
 
     private FriendsFragLayout layoutFriends;
     private MemoryLaneFragLayout layoutMemoryLane;
@@ -80,6 +83,7 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
     {
         ViewGroup topBarLayout = (ViewGroup) findViewById(R.id.activity_main_topbar_layout);
         RelativeLayout backButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_main_back_container);
+        topBarTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_main_back_text_view);
 
         backButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,10 +124,33 @@ public class MainActivity extends ActionBarActivity implements MemoryLaneFragLay
                 lastSelectedViewInMenu = menuFriends;
                 lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
                 lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
+                topBarTitleTextView.setText("Your friends");
 
                 layoutFriends = new FriendsFragLayout();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_fragment_container, layoutFriends)
+                        .commit();
+                mainMenu.toggle();
+            }
+        });
+        final Button menuMemoryLane = (Button) mainMenu.findViewById(R.id.menu_currentSelection_button);
+        menuMemoryLane.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(lastSelectedViewInMenu != null)
+                {
+                    lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.darker_gray));
+                    lastSelectedViewInMenu.setTypeface(null, Typeface.NORMAL);
+                }
+                lastSelectedViewInMenu = null;
+                topBarTitleTextView.setText("Memory Lane");
+//                lastSelectedViewInMenu.setTextColor(getResources().getColor(R.color.transparent_blue_pressed));
+//                lastSelectedViewInMenu.setTypeface(null, Typeface.BOLD);
+
+                layoutMemoryLane = new MemoryLaneFragLayout();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment_container, layoutMemoryLane)
                         .commit();
                 mainMenu.toggle();
             }
