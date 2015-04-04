@@ -143,9 +143,11 @@ public class NewMemoryFragLayout extends BaseFragment {
         doneButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveMemory();
-                listener.onSaveClicked();
-                hideKeyboard();
+                if(saveMemory()) {
+                    listener.onSaveClicked();
+                    hideKeyboard();
+                    getActivity().finish();
+                }
             }
         });
     }
@@ -512,7 +514,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         imm.hideSoftInputFromWindow(coverImageView.getWindowToken(), 0);
     }
 
-    private void saveMemory()
+    private boolean saveMemory()
     {
         DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
         Memory memory = new Memory();
@@ -539,11 +541,12 @@ public class NewMemoryFragLayout extends BaseFragment {
 
         if(dbHelper.insertMemory(memory))
         {
-            Log.i("memory", "inserted successfully");
+            return true;
         }
         else
         {
             Log.i("memory", "insertion failed");
         }
+        return false;
     }
 }
