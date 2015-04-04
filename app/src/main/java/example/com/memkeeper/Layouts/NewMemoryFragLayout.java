@@ -258,6 +258,18 @@ public class NewMemoryFragLayout extends BaseFragment {
         });
         coverImageView.requestFocus();
 
+
+        if(PhotoUtils.getSelectedPhotos() != null) {
+            for (Photo photo : PhotoUtils.getSelectedPhotos()) {
+                photo.setSelected(false);
+            }
+            PhotoUtils.getSelectedPhotos().clear();
+        }
+        for (Album album : PhotoUtils.getAlbums()) {
+            album.setNrSelectedPhotos(0);
+        }
+
+
         if(NewMemoryActivity.isEdit == 1)
         {
             fillForEdit(finalMemoryItem, friendsContainer);
