@@ -33,6 +33,36 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/topbar_new_memory_delete_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_topbar_btn_back"
+        android:layout_toLeftOf="@+id/topbar_new_memory_done_container"
+        android:paddingRight="@dimen/normal_horizontal_padding"
+        android:paddingLeft="@dimen/normal_horizontal_padding"
+        android:clickable="true"
+        android:descendantFocusability="blocksDescendants"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/topbar_new_memory_delete_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:src="@drawable/sel_icn_remove"/>
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Delete"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textSize="@dimen/text_size_small"-->
+            <!--android:textColor="@color/sel_text_black_white"/>-->
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/topbar_new_memory_done_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

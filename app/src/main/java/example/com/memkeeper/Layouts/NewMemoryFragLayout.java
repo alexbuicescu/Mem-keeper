@@ -129,6 +129,17 @@ public class NewMemoryFragLayout extends BaseFragment {
         {
             TextView backButtonTitleTextView = (TextView) topBarLayout.findViewById(R.id.topbar_new_memory_title_text_view);
             backButtonTitleTextView.setText("Edit");
+            RelativeLayout deleteButtonLayout = (RelativeLayout) topBarLayout.findViewById(R.id.topbar_new_memory_delete_container);
+            deleteButtonLayout.setVisibility(View.VISIBLE);
+            deleteButtonLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DatabaseHelper dbHelper = new DatabaseHelper(context);
+                    dbHelper.deleteMemory(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
+                    hideKeyboard();
+                    getActivity().finish();
+                }
+            });
         }
 
         backButtonLayout.setOnClickListener(new View.OnClickListener() {
