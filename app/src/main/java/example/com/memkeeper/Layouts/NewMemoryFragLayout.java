@@ -114,7 +114,7 @@ public class NewMemoryFragLayout extends BaseFragment {
         backButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                ((NewMemoryActivity)context).onBackPressed();
                 hideKeyboard();
 //                listener.onTopBarBackClick();
             }

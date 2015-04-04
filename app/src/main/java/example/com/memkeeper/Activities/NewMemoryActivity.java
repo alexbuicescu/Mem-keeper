@@ -50,6 +50,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     {
         if(!isInAlbum)
         {
+            Log.i("back", "back");
             if(!selectCover)
             {
                 layoutNewMemory.updatePhotos();
@@ -76,6 +77,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 //                    layoutNewMemory.initCover(firstCoverPhoto);
 //                }
             }
+            getSupportFragmentManager().popBackStack();
             super.onBackPressed();
         }
         else
@@ -136,8 +138,14 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 
     @Override
     public void onTopBarBackClick() {
-        getSupportFragmentManager().popBackStack();
-
+        try {
+            getSupportFragmentManager().popBackStack();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        isInAlbum = false;
         if(layoutAlbums != null)
         {
             layoutAlbums.refresh();
@@ -151,6 +159,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 
     @Override
     public void onTopBarDoneClick() {
+        isInAlbum = false;
         getSupportFragmentManager().popBackStack();
         layoutNewMemory.updatePhotos();
     }
@@ -158,6 +167,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     @Override
     public void onTopBarDoneClickPhotos() {
 
+        isInAlbum = false;
         getSupportFragmentManager().popBackStack();
         layoutAlbums.refresh();
         if(selectCover) {
@@ -201,6 +211,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     @Override
     public void onTopBarBackClickPhotos() {
 
+        isInAlbum = false;
 //        getSupportFragmentManager().popBackStack();
         if(layoutAlbums != null) {
             layoutAlbums.refresh();
@@ -258,11 +269,6 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
 
     @Override
     public void onSaveClicked() {
-
-    }
-
-    private void backFromPhotos()
-    {
 
     }
 }
