@@ -5,9 +5,16 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <include
+        android:id="@+id/new_memory_fragment_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        layout="@layout/topbar_new_memory" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/new_memory_fragment_top_bar">
 
         <LinearLayout
             android:layout_width="match_parent"

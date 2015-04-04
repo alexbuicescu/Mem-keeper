@@ -28,11 +28,12 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
     boolean selectCover;
     Photo lastCoverPhoto;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.holder_frag_gallery);
+
+        getSupportActionBar().hide();
 
         isInAlbum = false;
         selectCover = false;

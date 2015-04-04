@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_topbar_btn_back"
+        android:paddingRight="@dimen/normal_horizontal_padding"
+        android:clickable="true"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:id="@+id/topbar_new_memory_back_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:src="@drawable/sel_topbar_btn_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create a new memory"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/sel_text_black_white"
+            android:layout_toRightOf="@+id/topbar_new_memory_back_image_view"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_topbar_btn_back"
+        android:layout_alignParentRight="true"
+        android:paddingRight="@dimen/normal_horizontal_padding"
+        android:clickable="true"
+        android:descendantFocusability="blocksDescendants">
+
+        <ImageView
+            android:id="@+id/topbar_new_memory_done_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:src="@drawable/sel_topbar_btn_done"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/sel_text_black_white"
+            android:layout_toRightOf="@+id/topbar_new_memory_done_image_view"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
