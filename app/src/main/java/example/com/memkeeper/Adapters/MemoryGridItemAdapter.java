@@ -35,25 +35,27 @@ public class MemoryGridItemAdapter extends BaseAdapter {
      * The memory.
      */
     protected Memory memory;
+    private List<String> items;
 
     public MemoryGridItemAdapter(Context context, Memory memory) {
         this.context = context;
         this.memory = memory;
+        this.items = memory.getImagesPaths();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        if(memory != null && memory.getImagesPaths() != null)
+        if(items != null)
         {
-            return memory.getImagesPaths().size();
+            return items.size();
         }
         return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return memory.getImagesPaths().get(i);
+        return items.get(i);
     }
 
     @Override
@@ -82,7 +84,7 @@ public class MemoryGridItemAdapter extends BaseAdapter {
         try {
 
             Bitmap bm = MediaStore.Images.Thumbnails.getThumbnail(context.getContentResolver(),
-                    Long.parseLong(memory.getImagesPaths().get(position)), MediaStore.Images.Thumbnails.MINI_KIND, null);
+                    Long.parseLong(items.get(position)), MediaStore.Images.Thumbnails.MINI_KIND, null);
             holder.thumbnailImageView.setImageBitmap(bm);
         }
         catch (Exception e)
@@ -95,6 +97,7 @@ public class MemoryGridItemAdapter extends BaseAdapter {
     public void setMemory(Memory memory)
     {
         this.memory = memory;
+        this.items = memory.getImagesPaths();
     }
 
     private class ViewHolder {

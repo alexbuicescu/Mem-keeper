@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
+import example.com.memkeeper.Database.DatabaseHelper;
+import example.com.memkeeper.POJO.Memory;
 import example.com.memkeeper.R;
 import example.com.memkeeper.Utils.MemoriesUtils;
 
@@ -105,7 +107,8 @@ public class MemoryPhotosFragLayout extends BaseFragment {
 
     public void refresh()
     {
-        memoryGridItemAdapter.notifyDataSetChanged();
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        memoryGridItemAdapter.setMemory(dbHelper.getMemory(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId()));
         memoryGridItemAdapter.notifyDataSetChanged();
     }
 
