@@ -97,7 +97,10 @@ public class MemoryGridItemAdapter extends BaseAdapter {
     public void setMemory(Memory memory)
     {
         this.memory = memory;
-        this.items = memory.getImagesPaths();
+        if(memory != null)
+        {
+            this.items = memory.getImagesPaths();
+        }
     }
 
     private class ViewHolder {

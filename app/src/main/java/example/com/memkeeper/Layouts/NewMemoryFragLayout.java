@@ -35,6 +35,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import example.com.memkeeper.Activities.AddPhotosActivity;
+import example.com.memkeeper.Activities.MainActivity;
+import example.com.memkeeper.Activities.MemoryActivity;
 import example.com.memkeeper.Activities.NewMemoryActivity;
 import example.com.memkeeper.Adapters.MemoryGridItemAdapter;
 import example.com.memkeeper.Database.DatabaseHelper;
@@ -137,7 +139,10 @@ public class NewMemoryFragLayout extends BaseFragment {
                     DatabaseHelper dbHelper = new DatabaseHelper(context);
                     dbHelper.deleteMemory(MemoriesUtils.getMemoryList().get(MemoriesUtils.getCurrentMemory()).getId());
                     hideKeyboard();
-                    getActivity().finish();
+//                    getActivity().finish();
+                    Intent myIntent = new Intent(context, MainActivity.class);
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(myIntent);
                     broadcastIntent(null);
                 }
             });

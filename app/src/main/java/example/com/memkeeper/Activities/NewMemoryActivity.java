@@ -27,6 +27,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
         AlbumsFragLayout.OnAlbumsFragmentListener,
         PhotosFragLayout.OnPhotosFragmentListener  {
 
+    BroadcastReceiver receiver;
     NewMemoryFragLayout layoutNewMemory;
     AlbumsFragLayout layoutAlbums;
     PhotosFragLayout layoutPhotos;
@@ -54,7 +55,7 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
         onContentChanged();
 
         IntentFilter filter = new IntentFilter("example.com.memkeeper");
-        BroadcastReceiver receiver = new BroadcastReceiver() {
+        receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 //                String value =  intent.getExtras().getString("value");
@@ -71,6 +72,12 @@ public class NewMemoryActivity extends ActionBarActivity implements NewMemoryFra
         {
             e.printStackTrace();
         }
+    }
+    @Override
+    protected void onStop()
+    {
+        unregisterReceiver(receiver);
+        super.onStop();
     }
 
     @Override

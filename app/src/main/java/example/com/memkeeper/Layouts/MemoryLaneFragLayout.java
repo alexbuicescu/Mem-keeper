@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -109,6 +113,9 @@ public class MemoryLaneFragLayout extends BaseFragment {
 //        });
     }
 
+    int lastDirection = 0;
+    long lsatScroll = 0;
+
     private void updateView() {
         final ViewGroup addNewMemoryView = (ViewGroup) view.findViewById(R.id.main_activity_new_memory_button);
         addNewMemoryView.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +169,12 @@ public class MemoryLaneFragLayout extends BaseFragment {
                         int scrolly = -c.getTop() + memoriesListView.getFirstVisiblePosition() * c.getHeight();
 //                if(scrolly  > lastScrollY)
 //                {
+                        if(scrolly - lastScrollY != 0)
+                        {
+                            lastDirection = (int) (scrolly - lastScrollY);
+                        }
+                        lsatScroll = System.currentTimeMillis();
+
                         addNewMemoryView.setY((float) (addNewMemoryView.getY() + (scrolly - lastScrollY) / 6));
                         if (scrolly > lastScrollY &&
                                 addNewMemoryView.getY() < initialPositionAddNewButton + addNewMemoryView.getHeight()) {
@@ -189,6 +202,61 @@ public class MemoryLaneFragLayout extends BaseFragment {
                     }
                 }
             });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true)
+                {
+                    if(System.currentTimeMillis() - lsatScroll > 1000) {
+                        if (lastDirection > 0) {
+
+
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Animation animation = new TranslateAnimation(
+                                            Animation.ABSOLUTE, 0,
+                                            Animation.ABSOLUTE, 0,
+                                            Animation.ABSOLUTE, 0,
+                                            Animation.ABSOLUTE, (addNewMemoryView.getY() - initialPositionAddNewButton - addNewMemoryView.getHeight()) * -1);
+//                                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_bottom_top);
+                                    animation.setDuration(500);
+                                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                                    animation.setFillAfter(true);
+                                    addNewMemoryView.startAnimation(animation);
+                                }
+                            });
+//                            addNewMemoryView.setY(initialPositionAddNewButton + addNewMemoryView.getHeight());
+                            lastDirection = 0;
+                        } else
+                        if (lastDirection < 0) {
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Animation animation = new TranslateAnimation(
+                                            Animation.ABSOLUTE, 0,
+                                            Animation.ABSOLUTE, 0,
+                                            Animation.ABSOLUTE, 0,
+                                            Animation.ABSOLUTE, initialPositionAddNewButton - addNewMemoryView.getY());
+//                                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.anim_bottom_top);
+                                    animation.setDuration(500);
+                                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                                    animation.setFillAfter(true);
+                                    addNewMemoryView.startAnimation(animation);
+                                }
+                            });
+                            lastDirection = 0;
+//                            addNewMemoryView.setY(initialPositionAddNewButton);
+                        }
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
         }
     }
 
